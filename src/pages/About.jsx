@@ -1,3 +1,4 @@
+import React from "react";
 import momoImg from "../assets/momo.jpeg";
 import sekuwaImg from "../assets/sekwa.jpg";
 import chowmeinImg from "../assets/veg chowmine.jpg";
@@ -68,17 +69,25 @@ export default function About() {
               We’re committed to quality ingredients and homestyle recipes.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              From a handful of orders to hundreds each week, our goal remains the same: 
-              <span className="font-semibold text-yellow-600"> make you feel at home with every bite.</span>
+              From a handful of orders to hundreds each week, our goal remains the same:{" "}
+              <span className="font-semibold text-yellow-600">make you feel at home with every bite.</span>
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="group relative overflow-hidden rounded-3xl shadow-xl transform rotate-2 hover:rotate-0 hover:scale-105 transition">
-              <img src={momoImg} alt="Momo" className="h-52 w-full object-cover group-hover:scale-110 transition duration-500" />
+              <img
+                src={momoImg}
+                alt="Momo"
+                className="h-52 w-full object-cover group-hover:scale-110 transition duration-500"
+              />
             </div>
             <div className="group relative overflow-hidden rounded-3xl shadow-xl transform -rotate-2 hover:rotate-0 hover:scale-105 transition mt-8">
-              <img src={chowmeinImg} alt="Chowmein" className="h-52 w-full object-cover group-hover:scale-110 transition duration-500" />
+              <img
+                src={chowmeinImg}
+                alt="Chowmein"
+                className="h-52 w-full object-cover group-hover:scale-110 transition duration-500"
+              />
             </div>
             <div className="group relative overflow-hidden rounded-full border-4 border-white shadow-2xl -mt-8 mx-auto hover:scale-110 transition">
               <img src={sekuwaImg} alt="Sekuwa" className="w-32 h-32 object-cover" />
@@ -89,10 +98,15 @@ export default function About() {
         {/* Why Choose Us */}
         <div className="text-center mb-24">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Us?</h2>
-          <p className="text-gray-600 mb-12">The FoodHub promise — <span className="text-yellow-600 font-semibold">Delicious food, delivered fast.</span></p>
+          <p className="text-gray-600 mb-12">
+            The FoodHub promise — <span className="text-yellow-600 font-semibold">Delicious food, delivered fast.</span>
+          </p>
           <div className="grid md:grid-cols-4 gap-8">
             {features.map((f) => (
-              <div key={f.title} className="bg-white rounded-3xl shadow-lg p-8 hover:shadow-yellow-200 hover:-translate-y-2 transition">
+              <div
+                key={f.title}
+                className="bg-white rounded-3xl shadow-lg p-8 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+              >
                 <div className="text-5xl mb-4">{f.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{f.title}</h3>
                 <p className="text-gray-600">{f.desc}</p>
@@ -108,7 +122,10 @@ export default function About() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
           {stats.map((s) => (
-            <div key={s.label} className="bg-gradient-to-tr from-yellow-50 to-white rounded-3xl shadow-xl p-8 text-center border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition">
+            <div
+              key={s.label}
+              className="bg-gradient-to-tr from-yellow-50 to-white rounded-3xl shadow-xl p-8 text-center border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+            >
               <div className="text-4xl font-extrabold text-yellow-600 mb-3">{s.number}</div>
               <div className="text-gray-700 font-medium">{s.label}</div>
             </div>
@@ -120,8 +137,15 @@ export default function About() {
           <h2 className="text-4xl font-bold text-gray-900 mb-6">What Our Customers Say</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t) => (
-              <div key={t.name} className="bg-white rounded-3xl shadow-xl p-8 border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition">
-                <img src={t.image} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-yellow-100" />
+              <div
+                key={t.name}
+                className="bg-white rounded-3xl shadow-xl p-8 border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+              >
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-yellow-100"
+                />
                 <p className="text-gray-700 italic mb-4">“{t.feedback}”</p>
                 <h4 className="text-lg font-bold text-yellow-600">{t.name}</h4>
               </div>
@@ -134,8 +158,15 @@ export default function About() {
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Meet Our Team</h2>
           <div className="grid md:grid-cols-3 gap-10">
             {team.map((member) => (
-              <div key={member.name} className="bg-white rounded-3xl shadow-lg p-8 border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition">
-                <img src={member.img} alt={member.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover shadow-lg" />
+              <div
+                key={member.name}
+                className="bg-white rounded-3xl shadow-lg p-8 border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+              >
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover shadow-lg"
+                />
                 <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
                 <p className="text-yellow-600">{member.role}</p>
               </div>
@@ -175,7 +206,7 @@ export default function About() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.056282525731!2d85.324!3d27.7172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1901c6c1a7f7%3A0x6e234a5c6f5e7e4a!2sKathmandu%2C%20Nepal!5e0!3m2!1sen!2snp!4v1693999999999!5m2!1sen!2snp"
               width="100%"
               height="260"
-              allowFullScreen={true}
+              allowFullScreen
               loading="lazy"
               className="rounded-2xl border border-yellow-100"
             />

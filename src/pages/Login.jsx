@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Facebook, Mail } from "lucide-react";
-import sandwichImg from "../assets/Sandwitch.jpg"; // ✅ import sandwich image
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,23 +26,14 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-100 via-orange-50 to-yellow-200 px-4">
-      <div className="relative w-full max-w-md p-8 rounded-3xl shadow-2xl bg-white/70 backdrop-blur-xl border border-yellow-200 overflow-hidden">
-        {/* Decorative glowing orbs */}
-        <div className="absolute -top-10 -right-14 w-44 h-44 bg-yellow-300/40 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-10 -left-14 w-44 h-44 bg-orange-200/40 rounded-full blur-3xl"></div>
-
-        {/* Logo + Title */}
-        <div className="relative text-center mb-8">
-          <img
-            src={sandwichImg} // ✅ updated to sandwich
-            alt="Club Sandwich"
-            className="w-16 h-16 rounded-lg object-cover mx-auto mb-4"
-          />
-          <h2 className="text-3xl font-extrabold text-gray-900 drop-shadow-sm">
+    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-4">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8">
+        {/* Title */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-extrabold text-[#E94E1B] drop-shadow-sm">
             Welcome Back 👋
           </h2>
-          <p className="text-gray-600 text-sm mt-1">
+          <p className="text-sm text-[#666666] mt-1">
             Login to continue your food journey
           </p>
         </div>
@@ -59,7 +49,7 @@ function Login() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-[#E94E1B] mb-1">
               Email Address
             </label>
             <input
@@ -68,13 +58,13 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white/60"
+              className="w-full px-4 py-3 rounded-xl border border-[#FF7A38] focus:outline-none focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] transition bg-white"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-[#E94E1B] mb-1">
               Password
             </label>
             <div className="relative">
@@ -84,12 +74,13 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none pr-10 transition bg-white/60"
+                className="w-full px-4 py-3 rounded-xl border border-[#FF7A38] focus:outline-none focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] pr-10 transition bg-white"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition"
+                className="absolute right-3 top-3 text-[#E94E1B] hover:text-[#FF7A38] transition"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -97,19 +88,19 @@ function Login() {
           </div>
 
           {/* Remember Me + Forgot Password */}
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2 cursor-pointer">
+          <div className="flex items-center justify-between text-sm text-[#666666]">
+            <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
-                className="rounded text-yellow-500 focus:ring-yellow-400"
+                className="rounded text-[#FF7A38] focus:ring-[#E94E1B]"
               />
               Remember Me
             </label>
             <Link
               to="/forgot-password"
-              className="text-yellow-600 font-medium hover:underline"
+              className="text-[#E94E1B] font-semibold hover:underline"
             >
               Forgot Password?
             </Link>
@@ -119,11 +110,12 @@ function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 py-3 rounded-xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center"
+            className="w-full bg-[#FF7A38] text-white py-3 rounded-xl font-semibold hover:bg-[#E94E1B] active:scale-[0.98] transition-shadow shadow-md flex justify-center items-center gap-2"
           >
             {loading ? (
               <>
-                <Loader2 className="animate-spin mr-2" size={20} /> Logging in...
+                <Loader2 className="animate-spin" size={20} />
+                Logging in...
               </>
             ) : (
               "Login"
@@ -132,31 +124,31 @@ function Login() {
         </form>
 
         {/* Divider */}
-        <div className="flex items-center gap-2 my-6">
-          <hr className="flex-grow border-gray-300" />
-          <span className="text-gray-500 text-sm">or continue with</span>
-          <hr className="flex-grow border-gray-300" />
+        <div className="flex items-center gap-2 my-6 text-[#666666] text-sm">
+          <hr className="flex-grow border-[#FF7A38]" />
+          <span>or continue with</span>
+          <hr className="flex-grow border-[#FF7A38]" />
         </div>
 
         {/* Social Login */}
         <div className="grid grid-cols-2 gap-3">
-          <button className="flex items-center justify-center gap-2 py-2 border rounded-xl bg-white/70 hover:bg-white transition font-medium">
-            <Mail className="text-red-500" size={18} />
+          <button className="flex items-center justify-center gap-2 py-2 border border-[#FF7A38] rounded-xl bg-white text-[#FF7A38] hover:bg-[#FFE6DA] transition font-semibold">
+            <Mail size={18} />
             Google
           </button>
-          <button className="flex items-center justify-center gap-2 py-2 border rounded-xl bg-white/70 hover:bg-white transition font-medium">
-            <Facebook className="text-blue-600" size={18} />
+          <button className="flex items-center justify-center gap-2 py-2 border border-[#FF7A38] rounded-xl bg-white text-[#FF7A38] hover:bg-[#FFE6DA] transition font-semibold">
+            <Facebook size={18} />
             Facebook
           </button>
         </div>
 
         {/* Sign Up Link */}
-        <div className="mt-6 text-center text-sm text-gray-600">
+        <div className="mt-6 text-center text-sm text-[#666666]">
           <p>
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="text-yellow-600 font-semibold hover:underline"
+              className="text-[#E94E1B] font-semibold hover:underline"
             >
               Sign up
             </Link>
@@ -166,5 +158,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;
