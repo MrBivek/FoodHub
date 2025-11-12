@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Star, Search, X } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 import momoImg from "../assets/momo.jpeg";
 import chowmeinImg from "../assets/veg chowmine.jpg";
@@ -16,7 +17,7 @@ import pastaImg from "../assets/pasta.png";
 
 export default function Menu() {
   const [query, setQuery] = useState("");
-  const [cart, setCart] = useState([]);
+  const { addItem } = useCart(); // use cart context's addItem
 
   const dishes = [
     { id: 1, name: "Momo", img: momoImg, price: 299, rating: 4.8, badge: "Best Seller", color: "from-red-400 to-red-600" },
@@ -36,10 +37,6 @@ export default function Menu() {
   const filtered = dishes.filter((d) =>
     d.name.toLowerCase().includes(query.toLowerCase())
   );
-
-  const addToCart = (dish) => {
-    setCart((prev) => [...prev, dish]);
-  };
 
   const clearSearch = () => setQuery("");
 
@@ -128,7 +125,7 @@ export default function Menu() {
                   <p className="text-orange-600 font-semibold text-xl mb-4">Rs. {dish.price}</p>
 
                   <button
-                    onClick={() => addToCart(dish)}
+                    onClick={() => addItem({ ...dish, quantity: 1 })}
                     className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-full text-sm font-semibold hover:shadow-lg transition w-full"
                     aria-label={`Add ${dish.name} to cart`}
                   >
@@ -143,24 +140,6 @@ export default function Menu() {
             </p>
           )}
         </div>
-
-        {/* Cart Summary */}
-        {cart.length > 0 && (
-          <div className="fixed bottom-4 right-4 bg-white shadow-xl rounded-3xl p-5 max-w-xs w-full z-50 border border-orange-300">
-            <h3 className="font-bold text-orange-600 mb-3 text-lg">Your Cart ({cart.length})</h3>
-            <ul className="max-h-48 overflow-y-auto">
-              {cart.map((item, idx) => (
-                <li key={idx} className="flex justify-between py-1 border-b border-orange-100">
-                  <span>{item.name}</span>
-                  <span className="font-semibold">Rs. {item.price}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 text-right font-bold text-orange-700">
-              Total: Rs. {cart.reduce((a, b) => a + b.price, 0)}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

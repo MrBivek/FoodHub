@@ -8,9 +8,10 @@ import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import OrderTracking from "./pages/OrderTracking"; // ✅ Make sure file exists & default exported
+import Offers from "./pages/Offers";
+import OrderTracking from "./pages/OrderTracking";
 import { CartProvider } from "./context/CartContext";
-import { OrderProvider } from "./context/OrderContext"; // ✅ Make sure file exists & default exported
+import { OrderProvider } from "./context/OrderContext";
 
 export default function App() {
   return (
@@ -27,7 +28,9 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/track-order/:id" element={<OrderTracking />} /> {/* ✅ New Route */}
+              <Route path="/offer" element={<Offers />} />
+              <Route path="/track-order/:id" element={<OrderTracking />} />
+              {/* Add other routes as needed */}
             </Routes>
           </main>
           <Footer />

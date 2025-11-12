@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 
 const routeMap = {
   Home: "/",
-  Offer: "/offer",
+  Offer: "/offer",  // <-- updated here
   Menu: "/menu",
   "About Us": "/about",
 };

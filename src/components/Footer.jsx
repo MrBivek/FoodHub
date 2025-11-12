@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const routeMap = {
   Home: "/",
-  Offer: "/offer",
+  Offer: "/offer",  // <-- updated here
   Service: "/service",
   Menu: "/menu",
   "About Us": "/about",
@@ -93,7 +93,7 @@ export default function Footer() {
 
         {/* Newsletter */}
         <div>
-          <h3 className="text-lg font-semibold text-[#E94A1B] mb-4">Stay Updated</h3>
+          <h3 className="text-lg font-semibold text-[#E94E1B] mb-4">Stay Updated</h3>
           <p className="text-sm text-[#666666] mb-4">
             Subscribe for offers and latest updates.
           </p>
