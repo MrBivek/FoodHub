@@ -43,46 +43,45 @@ export default function About() {
   ];
 
   return (
-    <section>
+    <section className="bg-[#FFE9E3] min-h-screen">
       {/* Hero */}
-      <div className="relative text-center py-28 bg-gradient-to-r from-yellow-100 via-yellow-50 to-white text-gray-900 overflow-hidden">
+      <div className="relative text-center py-24 bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-50 text-gray-900 overflow-hidden">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4 tracking-tight">
-          About <span className="text-yellow-500">FoodHub Nepal</span>
+          About <span className="text-[#FF7A38]">FoodHub Nepal</span>
         </h1>
-        <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl mb-8 text-gray-800 max-w-3xl mx-auto px-4">
           Bringing authentic Nepali flavors to your doorstep since 2023 🏔️
         </p>
-        <div className="px-6 py-2 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg inline-block hover:scale-105 transition">
+        <div className="inline-block bg-[#FF7A38] text-white font-bold rounded-full px-6 py-3 shadow-lg hover:scale-105 transition">
           Est. 2023 • Bivek Dahal
         </div>
-        <div className="absolute -top-16 -left-16 w-40 h-40 bg-yellow-300 opacity-20 rounded-full blur-2xl"></div>
-        <div className="absolute -bottom-20 -right-20 w-56 h-56 bg-yellow-300 opacity-20 rounded-full blur-2xl"></div>
+        <div className="absolute -top-16 -left-16 w-40 h-40 bg-yellow-300 opacity-20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-20 -right-20 w-56 h-56 bg-yellow-300 opacity-20 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-6 py-20 bg-gradient-to-b from-yellow-50 via-white to-yellow-50">
+      <div className="max-w-7xl mx-auto px-6 py-20">
         {/* Story */}
-        <div className="grid lg:grid-cols-2 gap-14 mb-24 items-center">
-          <div className="backdrop-blur-md bg-white/70 rounded-3xl shadow-2xl p-10 border border-yellow-100 hover:shadow-yellow-200 transition">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+          <div className="bg-white rounded-2xl shadow-lg p-10 border border-[#FFB07C] hover:shadow-[#FF7A38] transition">
             <h3 className="text-3xl font-bold text-gray-900 mb-6">Our Journey</h3>
-            <p className="text-gray-700 leading-relaxed mb-5">
-              Started as a small kitchen project in Kathmandu, FoodHub Nepal has grown into a trusted brand for authentic Nepali dishes delivered fast and fresh. 
-              We’re committed to quality ingredients and homestyle recipes.
+            <p className="text-gray-700 mb-5 leading-relaxed">
+              Started as a small kitchen project in Kathmandu, FoodHub Nepal has grown into a trusted brand for authentic Nepali dishes delivered fast and fresh. We’re committed to quality ingredients and homestyle recipes.
             </p>
             <p className="text-gray-700 leading-relaxed">
               From a handful of orders to hundreds each week, our goal remains the same:{" "}
-              <span className="font-semibold text-yellow-600">make you feel at home with every bite.</span>
+              <span className="font-semibold text-[#FF7A38]">make you feel at home with every bite.</span>
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
-            <div className="group relative overflow-hidden rounded-3xl shadow-xl transform rotate-2 hover:rotate-0 hover:scale-105 transition">
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg transform rotate-2 hover:rotate-0 hover:scale-105 transition">
               <img
                 src={momoImg}
                 alt="Momo"
                 className="h-52 w-full object-cover group-hover:scale-110 transition duration-500"
               />
             </div>
-            <div className="group relative overflow-hidden rounded-3xl shadow-xl transform -rotate-2 hover:rotate-0 hover:scale-105 transition mt-8">
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg transform -rotate-2 hover:rotate-0 hover:scale-105 transition mt-8">
               <img
                 src={chowmeinImg}
                 alt="Chowmein"
@@ -96,16 +95,16 @@ export default function About() {
         </div>
 
         {/* Why Choose Us */}
-        <div className="text-center mb-24">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Us?</h2>
-          <p className="text-gray-600 mb-12">
-            The FoodHub promise — <span className="text-yellow-600 font-semibold">Delicious food, delivered fast.</span>
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">Why Choose Us?</h2>
+          <p className="text-gray-700 mb-12 max-w-3xl mx-auto">
+            The FoodHub promise — <span className="text-[#FF7A38] font-semibold">Delicious food, delivered fast.</span>
           </p>
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {features.map((f) => (
               <div
                 key={f.title}
-                className="bg-white rounded-3xl shadow-lg p-8 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+                className="bg-white rounded-2xl shadow-md p-8 hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
               >
                 <div className="text-5xl mb-4">{f.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{f.title}</h3>
@@ -116,38 +115,38 @@ export default function About() {
         </div>
 
         {/* Stats */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Numbers</h2>
-          <div className="w-28 h-1 bg-yellow-400 mx-auto mb-10 rounded-full"></div>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              className="bg-gradient-to-tr from-yellow-50 to-white rounded-3xl shadow-xl p-8 text-center border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition"
-            >
-              <div className="text-4xl font-extrabold text-yellow-600 mb-3">{s.number}</div>
-              <div className="text-gray-700 font-medium">{s.label}</div>
-            </div>
-          ))}
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Numbers</h2>
+          <div className="w-32 h-1 bg-[#FF7A38] mx-auto mb-12 rounded-full"></div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 max-w-5xl mx-auto">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="bg-white rounded-2xl shadow-md p-8 border border-[#FFB07C] hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
+              >
+                <div className="text-4xl font-extrabold text-[#FF7A38] mb-3">{s.number}</div>
+                <div className="text-gray-700 font-medium">{s.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Testimonials */}
-        <div className="text-center mb-24">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">What Our Customers Say</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">What Our Customers Say</h2>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {testimonials.map((t) => (
               <div
                 key={t.name}
-                className="bg-white rounded-3xl shadow-xl p-8 border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+                className="bg-white rounded-2xl shadow-md p-8 border border-[#FFB07C] hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
               >
                 <img
                   src={t.image}
                   alt={t.name}
-                  className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-yellow-100"
+                  className="w-20 h-20 rounded-full mx-auto mb-5 border-4 border-[#FFB07C]"
                 />
-                <p className="text-gray-700 italic mb-4">“{t.feedback}”</p>
-                <h4 className="text-lg font-bold text-yellow-600">{t.name}</h4>
+                <p className="text-gray-700 italic mb-6">“{t.feedback}”</p>
+                <h4 className="text-lg font-bold text-[#FF7A38]">{t.name}</h4>
               </div>
             ))}
           </div>
@@ -155,27 +154,27 @@ export default function About() {
 
         {/* Meet the Team */}
         <div className="text-center mb-24">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Meet Our Team</h2>
-          <div className="grid md:grid-cols-3 gap-10">
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">Meet Our Team</h2>
+          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
             {team.map((member) => (
               <div
                 key={member.name}
-                className="bg-white rounded-3xl shadow-lg p-8 border border-yellow-100 hover:shadow-yellow-200 hover:-translate-y-2 transition"
+                className="bg-white rounded-2xl shadow-md p-8 border border-[#FFB07C] hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
               >
                 <img
                   src={member.img}
                   alt={member.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover shadow-lg"
+                  className="w-24 h-24 rounded-full mx-auto mb-5 object-cover shadow-md"
                 />
                 <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
-                <p className="text-yellow-600">{member.role}</p>
+                <p className="text-[#FF7A38]">{member.role}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Contact card */}
-        <div className="bg-gradient-to-tr from-white to-yellow-50 rounded-3xl shadow-xl p-10 max-w-5xl mx-auto border border-yellow-100 hover:shadow-yellow-200 transition">
+        {/* Contact Card */}
+        <div className="bg-white rounded-2xl shadow-md p-10 max-w-5xl mx-auto border border-[#FFB07C] hover:shadow-[#FF7A38] transition mb-20">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Info</h3>
@@ -194,11 +193,12 @@ export default function About() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Website Built</span>
-                  <span className="text-yellow-600 font-semibold">2025</span>
+                  <span className="text-[#FF7A38] font-semibold">2025</span>
                 </div>
               </div>
             </div>
           </div>
+
           {/* Google Map Embed */}
           <div className="mt-8">
             <iframe
@@ -208,21 +208,24 @@ export default function About() {
               height="260"
               allowFullScreen
               loading="lazy"
-              className="rounded-2xl border border-yellow-100"
+              className="rounded-2xl border border-[#FFB07C]"
             />
           </div>
-          <div className="mt-8 pt-6 border-t border-yellow-100 text-center">
+
+          <div className="mt-8 pt-6 border-t border-[#FFB07C] text-center">
             <p className="text-gray-700">
-              <span className="font-semibold text-yellow-600">FoodHub Nepal</span> — Your trusted food delivery partner 🍽️
+              <span className="font-semibold text-[#FF7A38]">FoodHub Nepal</span> — Your trusted food delivery partner 🍽️
             </p>
           </div>
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-24">
+        <div className="text-center mb-20">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Ready to Taste Happiness?</h2>
-          <p className="text-gray-600 mb-6">Order now and experience authentic Nepali flavors delivered to you.</p>
-          <button className="bg-yellow-400 px-10 py-4 rounded-full font-bold shadow-xl hover:bg-yellow-500 hover:scale-105 transition">
+          <p className="text-gray-700 mb-8 max-w-3xl mx-auto">
+            Order now and experience authentic Nepali flavors delivered to you.
+          </p>
+          <button className="bg-[#FF7A38] text-white px-12 py-4 rounded-full font-bold shadow-lg hover:bg-[#E94E1B] hover:scale-105 transition">
             Order Now 🚴
           </button>
         </div>

@@ -3,11 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
+const routeMap = {
+  Home: "/",
+  Offer: "/offer",
+  Menu: "/menu",
+  "About Us": "/about",
+};
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { totals } = useCart();
-
-  const menuItems = ["Home", "Offer", "Menu", "About Us"];
 
   return (
     <header className="bg-[#FFE9E3] shadow-md sticky top-0 z-50">
@@ -18,10 +23,10 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-8 font-semibold text-[#333333]">
-          {menuItems.map((item) => (
+          {Object.keys(routeMap).map((item) => (
             <NavLink
               key={item}
-              to={item === "Home" ? "/" : `/${item.toLowerCase().replace(/\s/g, "")}`}
+              to={routeMap[item]}
               className={({ isActive }) =>
                 isActive
                   ? "text-[#FF7A38] border-b-2 border-[#FF7A38] pb-1"
@@ -43,7 +48,7 @@ export default function Navbar() {
             Login
           </Link>
           <Link
-            to="/register"  // Changed from /signup to /register
+            to="/register"
             className="px-4 py-2 bg-[#FF7A38] text-white rounded-full font-semibold hover:bg-[#E94A1B] transition"
           >
             Sign Up
@@ -71,10 +76,10 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <nav className="md:hidden bg-[#FFE9E3] px-6 pb-6 space-y-3 font-semibold text-[#333333]">
-          {menuItems.map((item) => (
+          {Object.keys(routeMap).map((item) => (
             <NavLink
               key={item}
-              to={item === "Home" ? "/" : `/${item.toLowerCase().replace(/\s/g, "")}`}
+              to={routeMap[item]}
               className={({ isActive }) =>
                 isActive
                   ? "block border-b-2 border-[#FF7A38] pb-1 text-[#FF7A38]"
@@ -96,7 +101,7 @@ export default function Navbar() {
               Login
             </Link>
             <Link
-              to="/register"  // Changed from /signup to /register
+              to="/register"
               className="flex-1 px-4 py-2 bg-[#FF7A38] text-white text-center rounded-full font-semibold hover:bg-[#E94A1B] transition"
               onClick={() => setMenuOpen(false)}
             >

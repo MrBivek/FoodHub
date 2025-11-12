@@ -1,11 +1,13 @@
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
+
+const routeMap = {
+  Home: "/",
+  Offer: "/offer",
+  Service: "/service",
+  Menu: "/menu",
+  "About Us": "/about",
+};
 
 export default function Footer() {
   const handleSubscribe = (e) => {
@@ -32,14 +34,11 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold text-[#E94E1B] mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm">
-            {["Home", "Offer", "Service", "Menu", "About Us"].map((item) => (
+            {Object.keys(routeMap).map((item) => (
               <li key={item}>
-                <a
-                  href={`/${item.toLowerCase().replace(/\s/g, "")}`}
-                  className="hover:text-[#FF7A38] transition"
-                >
+                <Link to={routeMap[item]} className="hover:text-[#FF7A38] transition">
                   {item}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -69,7 +68,7 @@ export default function Footer() {
               className="p-2 bg-white rounded-lg hover:bg-[#FF7A38] transition"
               aria-label="Facebook"
             >
-              <Facebook className="w-5 h-5 text-[#E94E1B]" />
+              <Facebook className="w-5 h-5 text-[#E94A1B]" />
             </a>
             <a
               href="https://twitter.com"
@@ -78,7 +77,7 @@ export default function Footer() {
               className="p-2 bg-white rounded-lg hover:bg-[#FF7A38] transition"
               aria-label="Twitter"
             >
-              <Twitter className="w-5 h-5 text-[#E94E1B]" />
+              <Twitter className="w-5 h-5 text-[#E94A1B]" />
             </a>
             <a
               href="https://instagram.com"
@@ -87,14 +86,14 @@ export default function Footer() {
               className="p-2 bg-white rounded-lg hover:bg-[#FF7A38] transition"
               aria-label="Instagram"
             >
-              <Instagram className="w-5 h-5 text-[#E94E1B]" />
+              <Instagram className="w-5 h-5 text-[#E94A1B]" />
             </a>
           </div>
         </div>
 
         {/* Newsletter */}
         <div>
-          <h3 className="text-lg font-semibold text-[#E94E1B] mb-4">Stay Updated</h3>
+          <h3 className="text-lg font-semibold text-[#E94A1B] mb-4">Stay Updated</h3>
           <p className="text-sm text-[#666666] mb-4">
             Subscribe for offers and latest updates.
           </p>
