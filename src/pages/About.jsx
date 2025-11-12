@@ -3,6 +3,73 @@ import momoImg from "../assets/momo.jpeg";
 import sekuwaImg from "../assets/sekwa.jpg";
 import chowmeinImg from "../assets/veg chowmine.jpg";
 
+// Replace emoji icons with SVG icons inline for better style
+const FeatureIcon = ({ icon }) => {
+  switch (icon) {
+    case "rocket":
+      return (
+        <svg
+          className="w-12 h-12 text-[#FF7A38] mb-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M9.5 13.5L2 21l2.5-7.5L16 3l-6.5 10.5z" />
+          <path d="M9.5 13.5L7 21l4-1 1-7" />
+        </svg>
+      );
+    case "soup":
+      return (
+        <svg
+          className="w-12 h-12 text-[#FF7A38] mb-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M4 16v-1a4 4 0 018 0v1" />
+          <path d="M12 16v-1a4 4 0 018 0v1" />
+          <path d="M4 16h16v3H4z" />
+          <path d="M9 19h6" />
+        </svg>
+      );
+    case "payment":
+      return (
+        <svg
+          className="w-12 h-12 text-[#FF7A38] mb-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="2" y="7" width="20" height="10" rx="2" ry="2" />
+          <path d="M2 11h20" />
+          <path d="M6 15h.01" />
+        </svg>
+      );
+    case "leaf":
+      return (
+        <svg
+          className="w-12 h-12 text-[#FF7A38] mb-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M12 2a7 7 0 017 7c0 3.866-7 13-7 13S5 12.866 5 9a7 7 0 017-7z" />
+          <path d="M12 9v4" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
 export default function About() {
   const stats = [
     { number: "500+", label: "Happy Customers" },
@@ -14,221 +81,234 @@ export default function About() {
   const testimonials = [
     {
       name: "Aarav Shrestha",
-      feedback: "Best momo in town! Delivery is super fast, and the food tastes homemade.",
-      image: "https://i.pravatar.cc/100?img=12",
+      feedback:
+        "Best momo in town! Delivery is super fast, and the food tastes homemade.",
     },
     {
       name: "Sita Khadka",
-      feedback: "Loved the chowmein — reminded me of street food in Kathmandu, but cleaner!",
-      image: "https://i.pravatar.cc/100?img=31",
+      feedback:
+        "Loved the chowmein — reminded me of street food in Kathmandu, but cleaner!",
     },
     {
       name: "Ravi Gurung",
-      feedback: "Quick delivery, fresh food, and amazing taste. Highly recommend FoodHub Nepal!",
-      image: "https://i.pravatar.cc/100?img=18",
+      feedback:
+        "Quick delivery, fresh food, and amazing taste. Highly recommend FoodHub Nepal!",
     },
   ];
 
   const team = [
-    { name: "Chef Bivek Dahal", role: "Founder & Head Chef", img: "https://i.pravatar.cc/150?img=5" },
-    { name: "Aashika Sharma", role: "Marketing Manager", img: "https://i.pravatar.cc/150?img=10" },
-    { name: "Rajesh Thapa", role: "Delivery Head", img: "https://i.pravatar.cc/150?img=45" },
+    { name: "Chef Bivek Dahal", role: "Founder & Head Chef" },
+    { name: "Aashika Sharma", role: "Marketing Manager" },
+    { name: "Rajesh Thapa", role: "Delivery Head" },
   ];
 
   const features = [
-    { icon: "🚀", title: "Fast Delivery", desc: "Hot and fresh food at your doorstep in 20 minutes." },
-    { icon: "🍲", title: "Authentic Taste", desc: "Traditional recipes prepared with love and care." },
-    { icon: "💳", title: "Easy Payment", desc: "Multiple secure payment options available." },
-    { icon: "🌱", title: "Fresh Ingredients", desc: "We use only farm-fresh and organic ingredients." },
+    {
+      icon: "rocket",
+      title: "Fast Delivery",
+      desc: "Hot and fresh food at your doorstep in 20 minutes.",
+    },
+    {
+      icon: "soup",
+      title: "Authentic Taste",
+      desc: "Traditional recipes prepared with love and care.",
+    },
+    {
+      icon: "payment",
+      title: "Easy Payment",
+      desc: "Multiple secure payment options available.",
+    },
+    {
+      icon: "leaf",
+      title: "Fresh Ingredients",
+      desc: "We use only farm-fresh and organic ingredients.",
+    },
   ];
 
   return (
-    <section className="bg-[#FFE9E3] min-h-screen">
+    <section className="bg-[#fffaf5] min-h-screen">
       {/* Hero */}
-      <div className="relative text-center py-24 bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-50 text-gray-900 overflow-hidden">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4 tracking-tight">
-          About <span className="text-[#FF7A38]">FoodHub Nepal</span>
+      <div className="relative text-center py-24 bg-gradient-to-r from-[#FF7A38] via-[#FF9B4B] to-[#FFC68B] text-white overflow-hidden">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight drop-shadow-lg">
+          About <span className="text-yellow-300">FoodHub Nepal</span>
         </h1>
-        <p className="text-lg md:text-xl mb-8 text-gray-800 max-w-3xl mx-auto px-4">
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto font-semibold drop-shadow-md">
           Bringing authentic Nepali flavors to your doorstep since 2023 🏔️
         </p>
-        <div className="inline-block bg-[#FF7A38] text-white font-bold rounded-full px-6 py-3 shadow-lg hover:scale-105 transition">
-          Est. 2023 • Bivek Dahal
-        </div>
-        <div className="absolute -top-16 -left-16 w-40 h-40 bg-yellow-300 opacity-20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-20 -right-20 w-56 h-56 bg-yellow-300 opacity-20 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        {/* Story */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-          <div className="bg-white rounded-2xl shadow-lg p-10 border border-[#FFB07C] hover:shadow-[#FF7A38] transition">
-            <h3 className="text-3xl font-bold text-gray-900 mb-6">Our Journey</h3>
-            <p className="text-gray-700 mb-5 leading-relaxed">
-              Started as a small kitchen project in Kathmandu, FoodHub Nepal has grown into a trusted brand for authentic Nepali dishes delivered fast and fresh. We’re committed to quality ingredients and homestyle recipes.
+      <div className="max-w-7xl mx-auto px-6 py-16 space-y-20">
+        {/* Journey + Gallery */}
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <article className="space-y-6">
+            <h2 className="text-4xl font-extrabold text-[#FF7A38] border-l-8 border-yellow-400 pl-4">
+              Our Journey
+            </h2>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              From a humble kitchen in Kathmandu to a thriving food delivery
+              brand, FoodHub Nepal has grown by focusing on authentic flavors,
+              quality ingredients, and rapid delivery.
             </p>
-            <p className="text-gray-700 leading-relaxed">
-              From a handful of orders to hundreds each week, our goal remains the same:{" "}
-              <span className="font-semibold text-[#FF7A38]">make you feel at home with every bite.</span>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              Our mission is simple —{" "}
+              <span className="font-semibold text-[#FF7A38]">
+                to bring the taste of Nepal right to your table.
+              </span>
             </p>
-          </div>
+          </article>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg transform rotate-2 hover:rotate-0 hover:scale-105 transition">
+          <div className="relative grid grid-cols-2 gap-6">
+            <div className="rounded-3xl overflow-hidden shadow-xl transform rotate-3 hover:rotate-0 transition duration-500 cursor-pointer">
               <img
                 src={momoImg}
-                alt="Momo"
-                className="h-52 w-full object-cover group-hover:scale-110 transition duration-500"
+                alt="Delicious Momo"
+                className="object-cover w-full h-64"
+                loading="lazy"
               />
             </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg transform -rotate-2 hover:rotate-0 hover:scale-105 transition mt-8">
+            <div className="rounded-3xl overflow-hidden shadow-xl transform -rotate-3 hover:rotate-0 transition duration-500 cursor-pointer">
               <img
                 src={chowmeinImg}
-                alt="Chowmein"
-                className="h-52 w-full object-cover group-hover:scale-110 transition duration-500"
+                alt="Veg Chowmein"
+                className="object-cover w-full h-64"
+                loading="lazy"
               />
             </div>
-            <div className="group relative overflow-hidden rounded-full border-4 border-white shadow-2xl -mt-8 mx-auto hover:scale-110 transition">
-              <img src={sekuwaImg} alt="Sekuwa" className="w-32 h-32 object-cover" />
+            <div className="rounded-full border-8 border-white shadow-2xl absolute -bottom-10 right-0 w-40 h-40 overflow-hidden hover:scale-110 transition duration-500 cursor-pointer">
+              <img
+                src={sekuwaImg}
+                alt="Sekuwa"
+                className="object-cover w-full h-full"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
 
-        {/* Why Choose Us */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Why Choose Us?</h2>
-          <p className="text-gray-700 mb-12 max-w-3xl mx-auto">
-            The FoodHub promise — <span className="text-[#FF7A38] font-semibold">Delicious food, delivered fast.</span>
+        {/* Features */}
+        <div className="text-center max-w-5xl mx-auto space-y-8">
+          <h2 className="text-4xl font-extrabold text-gray-900">Why Choose Us?</h2>
+          <p className="text-gray-600 text-lg max-w-xl mx-auto">
+            The FoodHub promise —{" "}
+            <span className="text-[#FF7A38] font-semibold">
+              Delicious food, delivered fast.
+            </span>
           </p>
-          <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            {features.map((f) => (
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mt-10">
+            {features.map(({ icon, title, desc }) => (
               <div
-                key={f.title}
-                className="bg-white rounded-2xl shadow-md p-8 hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
+                key={title}
+                className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-[#FF7A38] transition transform hover:-translate-y-1"
               >
-                <div className="text-5xl mb-4">{f.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{f.title}</h3>
-                <p className="text-gray-600">{f.desc}</p>
+                <FeatureIcon icon={icon} />
+                <h3 className="text-xl font-bold mb-2">{title}</h3>
+                <p className="text-gray-600">{desc}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Stats */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Numbers</h2>
-          <div className="w-32 h-1 bg-[#FF7A38] mx-auto mb-12 rounded-full"></div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 max-w-5xl mx-auto">
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="bg-white rounded-2xl shadow-md p-8 border border-[#FFB07C] hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
-              >
-                <div className="text-4xl font-extrabold text-[#FF7A38] mb-3">{s.number}</div>
-                <div className="text-gray-700 font-medium">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <section className="bg-[#fff4e6] rounded-3xl shadow-xl py-16 max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+          {stats.map(({ number, label }) => (
+            <div key={label} className="space-y-2">
+              <p className="text-4xl font-extrabold text-[#FF7A38]">{number}</p>
+              <p className="uppercase tracking-wide font-semibold text-gray-600">
+                {label}
+              </p>
+            </div>
+          ))}
+        </section>
 
         {/* Testimonials */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-gray-900 mb-8">What Our Customers Say</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((t) => (
-              <div
-                key={t.name}
-                className="bg-white rounded-2xl shadow-md p-8 border border-[#FFB07C] hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
+        <section className="max-w-6xl mx-auto space-y-14">
+          <h2 className="text-4xl font-extrabold text-center text-gray-900">
+            What Our Customers Say
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map(({ name, feedback }) => (
+              <blockquote
+                key={name}
+                className="bg-white rounded-3xl p-8 shadow-lg relative before:content-['“'] before:absolute before:-top-8 before:left-8 before:text-6xl before:text-[#FF7A38] before:opacity-20"
               >
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  className="w-20 h-20 rounded-full mx-auto mb-5 border-4 border-[#FFB07C]"
-                />
-                <p className="text-gray-700 italic mb-6">“{t.feedback}”</p>
-                <h4 className="text-lg font-bold text-[#FF7A38]">{t.name}</h4>
+                <p className="text-gray-700 italic mb-6 leading-relaxed">{feedback}</p>
+                <footer className="font-bold text-[#FF7A38] text-right">{name}</footer>
+              </blockquote>
+            ))}
+          </div>
+        </section>
+
+        {/* Team */}
+        <section className="max-w-6xl mx-auto space-y-12">
+          <h2 className="text-4xl font-extrabold text-center text-gray-900">
+            Meet Our Team
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {team.map(({ name, role }) => (
+              <div
+                key={name}
+                className="bg-white rounded-3xl p-10 shadow-lg border-2 border-[#FFB07C] hover:shadow-[#FF7A38] transition"
+              >
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{name}</h3>
+                <p className="text-[#FF7A38] font-semibold">{role}</p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Meet the Team */}
-        <div className="text-center mb-24">
-          <h2 className="text-4xl font-bold text-gray-900 mb-8">Meet Our Team</h2>
-          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-            {team.map((member) => (
-              <div
-                key={member.name}
-                className="bg-white rounded-2xl shadow-md p-8 border border-[#FFB07C] hover:shadow-[#FF7A38] hover:-translate-y-1 transition"
-              >
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-5 object-cover shadow-md"
-                />
-                <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
-                <p className="text-[#FF7A38]">{member.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Contact Card */}
-        <div className="bg-white rounded-2xl shadow-md p-10 max-w-5xl mx-auto border border-[#FFB07C] hover:shadow-[#FF7A38] transition mb-20">
+        {/* Contact + Map */}
+        <section className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-10 mt-20">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Info</h3>
-              <div className="space-y-4 text-gray-700">
-                <div>✉️ bivek123dahal@gmail.com</div>
-                <div>📞 +977-9800000000</div>
-                <div>📍 Kathmandu, Nepal</div>
-              </div>
+              <h3 className="text-3xl font-bold mb-6 text-[#FF7A38]">Contact Info</h3>
+              <ul className="space-y-4 text-gray-700 text-lg">
+                <li>✉️ bivek123dahal@gmail.com</li>
+                <li>📞 +977-9800000000</li>
+                <li>📍 Kathmandu, Nepal</li>
+              </ul>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Business Hours</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Mon - Sun</span>
-                  <span className="text-gray-900 font-medium">10 AM - 10 PM</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Website Built</span>
-                  <span className="text-[#FF7A38] font-semibold">2025</span>
-                </div>
-              </div>
+              <h3 className="text-3xl font-bold mb-6 text-[#FF7A38]">Business Hours</h3>
+              <ul className="space-y-4 text-gray-700 text-lg">
+                <li className="flex justify-between">
+                  <span>Mon - Sun</span>
+                  <span className="font-semibold">10 AM - 10 PM</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Website Built</span>
+                  <span className="font-semibold">2025</span>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* Google Map Embed */}
-          <div className="mt-8">
+          <div className="mt-10 rounded-3xl overflow-hidden shadow-lg">
             <iframe
               title="map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.056282525731!2d85.324!3d27.7172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1901c6c1a7f7%3A0x6e234a5c6f5e7e4a!2sKathmandu%2C%20Nepal!5e0!3m2!1sen!2snp!4v1693999999999!5m2!1sen!2snp"
               width="100%"
-              height="260"
+              height="280"
               allowFullScreen
               loading="lazy"
-              className="rounded-2xl border border-[#FFB07C]"
             />
           </div>
-
-          <div className="mt-8 pt-6 border-t border-[#FFB07C] text-center">
-            <p className="text-gray-700">
-              <span className="font-semibold text-[#FF7A38]">FoodHub Nepal</span> — Your trusted food delivery partner 🍽️
-            </p>
-          </div>
-        </div>
+        </section>
 
         {/* Call to Action */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Ready to Taste Happiness?</h2>
-          <p className="text-gray-700 mb-8 max-w-3xl mx-auto">
+        <section className="text-center mt-24 mb-24">
+          <h2 className="text-5xl font-extrabold text-gray-900 mb-6">
+            Ready to Taste Happiness?
+          </h2>
+          <p className="text-gray-700 mb-10 text-xl max-w-3xl mx-auto">
             Order now and experience authentic Nepali flavors delivered to you.
           </p>
-          <button className="bg-[#FF7A38] text-white px-12 py-4 rounded-full font-bold shadow-lg hover:bg-[#E94E1B] hover:scale-105 transition">
+          <button className="bg-[#FF7A38] hover:bg-[#E94E1B] text-white px-16 py-5 rounded-full text-lg font-extrabold shadow-lg transition-transform hover:scale-105">
             Order Now 🚴
           </button>
-        </div>
+        </section>
       </div>
     </section>
   );
