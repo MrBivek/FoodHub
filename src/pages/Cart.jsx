@@ -6,14 +6,14 @@ export default function Cart() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#FFE9E3] py-12 px-6">
+    <div className="min-h-screen bg-[#FFE9E3] py-12 px-6 font-sans">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-extrabold text-[#E94E1B] mb-12 text-center">
           🛒 Your <span className="text-[#FF7A38]">Cart</span>
         </h2>
 
         {items.length === 0 ? (
-          <div className="bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-12 text-center max-w-md mx-auto">
+          <div className="bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-12 text-center max-w-md mx-auto font-sans">
             <p className="text-gray-700 text-lg mb-6">Your cart is empty.</p>
             <Link
               to="/menu"
@@ -25,7 +25,7 @@ export default function Cart() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Items List */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-6 font-sans">
               {items.map((item) => (
                 <div
                   key={item.id}
@@ -71,7 +71,7 @@ export default function Cart() {
             </div>
 
             {/* Order Summary */}
-            <div className="bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8 hover:shadow-xl transition">
+            <div className="bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8 hover:shadow-xl transition font-sans">
               <h3 className="text-2xl font-bold text-[#E94E1B] mb-6">Order Summary</h3>
               <div className="flex justify-between text-[#E94E1B] mb-3">
                 <span>Total Items</span>

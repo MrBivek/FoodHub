@@ -8,7 +8,7 @@ import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Offers from "./pages/Offers";
+import Offers from "./pages/offers";
 import OrderTracking from "./pages/OrderTracking";
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";

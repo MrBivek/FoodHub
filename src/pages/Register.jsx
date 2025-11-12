@@ -25,8 +25,8 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-4 py-12">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 border border-[#FF7A38]">
+    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-6 py-12 font-sans">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8">
         <h2 className="text-3xl font-extrabold text-[#E94E1B] mb-2 text-center">
           Create Account
         </h2>
@@ -46,7 +46,7 @@ export default function Register() {
             placeholder="Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#FF7A38] outline-none bg-white transition"
+            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] outline-none bg-white transition"
             required
           />
           <input
@@ -54,7 +54,7 @@ export default function Register() {
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#FF7A38] outline-none bg-white transition"
+            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] outline-none bg-white transition"
             required
           />
           <input
@@ -62,14 +62,14 @@ export default function Register() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#FF7A38] outline-none bg-white transition"
+            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] outline-none bg-white transition"
             required
           />
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-xl font-bold text-gray-900 bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] shadow-lg hover:scale-[1.02] active:scale-[0.98] transition flex justify-center items-center ${
+            className={`w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] shadow-md hover:shadow-lg hover:scale-[1.05] active:scale-[0.98] transition flex justify-center items-center ${
               loading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >

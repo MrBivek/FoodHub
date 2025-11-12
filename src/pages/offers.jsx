@@ -29,9 +29,9 @@ const offers = [
 
 export default function Offers() {
   return (
-    <section className="bg-[#fffaf5] min-h-screen pb-20">
+    <section className="bg-gradient-to-br from-orange-50 via-white to-red-50 min-h-screen pb-20 font-sans">
       {/* Hero Banner */}
-      <div className="text-center py-24 bg-gradient-to-r from-[#FF7A38] via-[#FF9B4B] to-[#FFC68B] text-white">
+      <div className="text-center py-24 bg-gradient-to-r from-red-500 to-orange-500 text-white">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
           Special Offers
         </h1>
@@ -45,7 +45,7 @@ export default function Offers() {
         {offers.map(({ id, title, desc, img, discount }) => (
           <div
             key={id}
-            className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-[#FF7A38] transition transform hover:-translate-y-1 cursor-pointer"
+            className="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-red-400 transition transform hover:-translate-y-1 cursor-pointer"
           >
             <div className="relative">
               <img
@@ -54,14 +54,14 @@ export default function Offers() {
                 className="w-full h-56 object-cover"
                 loading="lazy"
               />
-              <div className="absolute top-4 left-4 bg-[#FF7A38] text-white font-bold px-4 py-2 rounded-full text-sm shadow-lg">
+              <div className="absolute top-4 left-4 bg-red-500 text-white font-bold px-4 py-2 rounded-full text-sm shadow-lg">
                 {discount}
               </div>
             </div>
             <div className="p-6">
-              <h3 className="text-2xl font-bold mb-3 text-[#FF7A38]">{title}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-red-600">{title}</h3>
               <p className="text-gray-700 mb-6">{desc}</p>
-              <button className="bg-[#FF7A38] text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-[#E94E1B] transition">
+              <button className="bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-red-700 transition w-full">
                 Order Now
               </button>
             </div>

@@ -26,7 +26,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-4 font-sans">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8">
         {/* Title */}
         <div className="text-center mb-8">
@@ -110,7 +110,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#FF7A38] text-white py-3 rounded-xl font-semibold hover:bg-[#E94E1B] active:scale-[0.98] transition-shadow shadow-md flex justify-center items-center gap-2"
+            className="w-full bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] text-white py-3 rounded-xl font-semibold hover:shadow-lg active:scale-[0.98] transition-shadow shadow-md flex justify-center items-center gap-2"
           >
             {loading ? (
               <>
