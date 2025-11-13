@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
@@ -11,6 +12,8 @@ import Register from "./pages/Register";
 import Offers from "./pages/Offers";
 import OrderTracking from "./pages/OrderTracking";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import UserProfile from "./pages/UserProfile";
+
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 
@@ -38,7 +41,11 @@ export default function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/offer" element={<Offers />} />
               <Route path="/track-order/:id" element={<OrderTracking />} />
-              <Route path="/order-confirmation/:orderId" element={<OrderConfirmationWrapper />} />
+              <Route
+                path="/order-confirmation/:orderId"
+                element={<OrderConfirmationWrapper />}
+              />
+              <Route path="/profile" element={<UserProfile />} />
               {/* Add other routes as needed */}
             </Routes>
           </main>

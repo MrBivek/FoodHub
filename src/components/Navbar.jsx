@@ -5,9 +5,10 @@ import { useCart } from "../context/CartContext";
 
 const routeMap = {
   Home: "/",
-  Offer: "/offer",
+  Offers: "/offers",
   Menu: "/menu",
   "About Us": "/about",
+  Profile: "/profile", // Added Profile here
 };
 
 export default function Navbar() {
