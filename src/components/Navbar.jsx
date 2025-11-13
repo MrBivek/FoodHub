@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 
 const routeMap = {
   Home: "/",
-  Offer: "/offer",  // <-- updated here
+  Offer: "/offer",
   Menu: "/menu",
   "About Us": "/about",
 };
@@ -54,7 +54,7 @@ export default function Navbar() {
             Sign Up
           </Link>
           <Link to="/cart" className="relative">
-            <ShoppingCart className="w-6 h-6 text-[#E94A1B]" />
+            <ShoppingCart className="w-6 h-6 text-[#E94E1B]" />
             {totals.count > 0 && (
               <span className="absolute -top-2 -right-2 bg-[#E94E1B] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                 {totals.count}

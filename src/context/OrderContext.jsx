@@ -5,21 +5,19 @@ const OrderContext = createContext();
 export function OrderProvider({ children }) {
   const [orders, setOrders] = useState([]);
 
-  // Place a new order
   const placeOrder = ({ items, totals }) => {
-    const orderId = Date.now().toString(); // unique ID
+    const orderId = Date.now().toString();
     const newOrder = {
       id: orderId,
       items,
       totals,
-      status: 0, // 0 = Placed, 1 = Preparing, 2 = On the Way, 3 = Delivered
+      status: 0, // 0: placed, 1: preparing, etc.
       createdAt: new Date(),
     };
     setOrders((prev) => [...prev, newOrder]);
     return orderId;
   };
 
-  // Get a specific order
   const getOrderById = (id) => orders.find((o) => o.id === id);
 
   return (

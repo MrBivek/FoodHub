@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import momoImg from "../assets/momo.jpeg";
 import sekuwaImg from "../assets/sekwa.jpg";
 import chowmeinImg from "../assets/veg chowmine.jpg";
@@ -61,9 +62,12 @@ export default function Offers() {
             <div className="p-6">
               <h3 className="text-2xl font-bold mb-3 text-red-600">{title}</h3>
               <p className="text-gray-700 mb-6">{desc}</p>
-              <button className="bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-red-700 transition w-full">
+              <Link
+                to="/menu"
+                className="block bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-red-700 transition w-full text-center"
+              >
                 Order Now
-              </button>
+              </Link>
             </div>
           </div>
         ))}

@@ -8,10 +8,18 @@ import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Offers from "./pages/offers";
+import Offers from "./pages/Offers";
 import OrderTracking from "./pages/OrderTracking";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
+
+import { useParams } from "react-router-dom";
+
+function OrderConfirmationWrapper() {
+  const { orderId } = useParams();
+  return <OrderConfirmation orderId={orderId} estimatedTime="30 minutes" />;
+}
 
 export default function App() {
   return (
@@ -30,6 +38,7 @@ export default function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/offer" element={<Offers />} />
               <Route path="/track-order/:id" element={<OrderTracking />} />
+              <Route path="/order-confirmation/:orderId" element={<OrderConfirmationWrapper />} />
               {/* Add other routes as needed */}
             </Routes>
           </main>
