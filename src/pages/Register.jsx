@@ -1,27 +1,43 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import API from "../services/api"; // ✅ axios instance
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    // Simulate registration delay
-    setTimeout(() => {
-      if (fullName && email && password) {
-        alert(`Welcome ${fullName}! Registration successful.`);
-      } else {
-        setError("Please fill in all fields correctly.");
-      }
+    try {
+      const { data } = await API.post("/auth/register", {
+        name: fullName,
+        email,
+        password,
+      });
+
+      // ✅ Save token & user in localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data));
+
+      alert(`🎉 Welcome ${data.name || fullName}! Registration successful.`);
+      navigate("/"); // Redirect after signup
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+          "Registration failed. Please check your details."
+      );
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (

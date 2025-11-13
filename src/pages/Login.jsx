@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Facebook, Mail } from "lucide-react";
+import API from "../services/api"; // 👈 make sure this file exists (axios setup)
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -15,14 +18,25 @@ export default function Login() {
     setLoading(true);
     setError("");
 
-    setTimeout(() => {
-      if (email === "test@foodhub.com" && password === "123456") {
-        alert("✅ Login successful!");
-      } else {
-        setError("Invalid email or password. Please try again.");
-      }
+    try {
+      // 👇 Send login request to backend
+      const { data } = await API.post("/auth/login", { email, password });
+
+      // ✅ Save JWT token to localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data));
+
+      alert("✅ Login successful!");
+      navigate("/"); // redirect after successful login
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+          "❌ Login failed. Please check your credentials."
+      );
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
