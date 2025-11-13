@@ -9,7 +9,7 @@ import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Offers from "./pages/Offers";
+import Offers from "./pages/Offer";
 import OrderTracking from "./pages/OrderTracking";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import UserProfile from "./pages/UserProfile";

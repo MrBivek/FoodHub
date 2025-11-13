@@ -14,8 +14,8 @@ const offers = [
   },
   {
     id: 2,
-    title: "Free Delivery on Sekuwa Combo",
-    desc: "Order our delicious Sekuwa combo and get free delivery.",
+    title: "Free Delivery on Sekuwa",
+    desc: "Order our delicious Sekuwa combo free delivery.",
     img: sekuwaImg,
     discount: "Free Delivery",
   },
@@ -46,9 +46,10 @@ export default function Offers() {
         {offers.map(({ id, title, desc, img, discount }) => (
           <div
             key={id}
-            className="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-red-400 transition transform hover:-translate-y-1 cursor-pointer"
+            className="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-red-400 transition transform hover:-translate-y-1 cursor-pointer flex flex-col"
+            style={{ height: "440px" }} // fixed height for consistent cards
           >
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               <img
                 src={img}
                 alt={title}
@@ -59,9 +60,12 @@ export default function Offers() {
                 {discount}
               </div>
             </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold mb-3 text-red-600">{title}</h3>
-              <p className="text-gray-700 mb-6">{desc}</p>
+
+            <div className="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <h3 className="text-2xl font-bold mb-3 text-red-600">{title}</h3>
+                <p className="text-gray-700 mb-6">{desc}</p>
+              </div>
               <Link
                 to="/menu"
                 className="block bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-red-700 transition w-full text-center"

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { Search, Clock, Shield, Truck, Star, ChevronRight } from "lucide-react";
+import { Clock, Shield, Truck, ChevronRight } from "lucide-react";
+
 import momoImg from "../assets/momo.jpeg";
 import chowmeinImg from "../assets/veg chowmine.jpg";
 import sekuwaImg from "../assets/sekwa.jpg";
-import jimbuImg from "../assets/jimbu.jpg";
 import burgerImg from "../assets/burger.jpg";
 import pizzaImg from "../assets/pizza.jpg";
 import friesImg from "../assets/fries.jpg";
@@ -53,11 +53,16 @@ export default function Home() {
               <Link
                 to="/menu"
                 className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-bold hover:shadow-xl transition flex items-center gap-2"
+                aria-label="Go to full menu"
               >
                 Buy Now
                 <ChevronRight className="w-5 h-5" />
               </Link>
-              <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-semibold hover:bg-gray-50 transition">
+              <button
+                className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-semibold hover:bg-gray-50 transition"
+                onClick={() => alert("To order, browse the menu and add your favorite items to the cart!")}
+                aria-label="How to order"
+              >
                 How To Order
               </button>
             </div>
@@ -107,9 +112,11 @@ export default function Home() {
 
         <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-8">
           {categories.map((cat, i) => (
-            <div
+            <Link
+              to="/menu"
               key={i}
               className="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:scale-105"
+              aria-label={`Order from ${cat.name}`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${cat.color} opacity-90`}></div>
               <div className="relative p-8 text-center">
@@ -123,12 +130,13 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-white mb-3">{cat.name}</h3>
                 <button
                   className="text-white underline font-semibold hover:text-yellow-200 transition"
-                  aria-label={`Order from ${cat.name}`}
+                  aria-label={`Order now from ${cat.name}`}
+                  type="button"
                 >
                   Order Now →
                 </button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -166,9 +174,13 @@ export default function Home() {
                   <h3 className="font-bold text-gray-900 mb-1">{dish.name}</h3>
                   <p className="text-sm text-gray-500 mb-2">{dish.category}</p>
                   <p className="text-xl font-bold text-orange-600 mb-3">{dish.price}</p>
-                  <button className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:shadow-lg transition w-full">
+                  <Link
+                    to="/menu"
+                    className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:shadow-lg transition inline-block w-full"
+                    aria-label={`Order ${dish.name} from menu`}
+                  >
                     Order
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -178,6 +190,7 @@ export default function Home() {
             <Link
               to="/menu"
               className="inline-block border-2 border-red-500 text-red-500 px-8 py-3 rounded-full font-bold hover:bg-red-500 hover:text-white transition"
+              aria-label="See full menu"
             >
               See All →
             </Link>
@@ -197,6 +210,7 @@ export default function Home() {
           <Link
             to="/menu"
             className="inline-block bg-white text-red-500 px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg hover:shadow-2xl transition transform hover:scale-105"
+            aria-label="Browse full menu"
           >
             Browse Full Menu
           </Link>
