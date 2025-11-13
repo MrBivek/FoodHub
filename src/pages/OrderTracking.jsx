@@ -10,50 +10,59 @@ export default function OrderTracking() {
 
   if (!order) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-yellow-50 font-sans px-6 py-20">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Order not found ❌
-        </h2>
+      <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] font-sans px-6 py-20">
+        <h2 className="text-2xl font-bold text-[#E94E1B]">Order not found ❌</h2>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-yellow-50 py-16 px-6 font-sans">
-      <div className="max-w-4xl mx-auto bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl p-10">
-        <h1 className="text-4xl font-extrabold text-yellow-800 mb-8 text-center lg:text-left">
+    <div className="min-h-screen bg-[#FFE9E3] py-16 px-6 font-sans">
+      <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-10">
+        <h1 className="text-4xl font-extrabold text-[#E94E1B] mb-8 text-center lg:text-left">
           Track Your Order 🚚
         </h1>
 
-        <div className="flex flex-col lg:flex-row justify-between mb-10 gap-6 text-gray-600 text-lg">
+        <div className="flex flex-col lg:flex-row justify-between mb-10 gap-6 text-gray-700 text-lg font-semibold">
           <p>
-            Order ID: <span className="font-semibold">{order.id}</span>
+            Order ID: <span className="font-bold text-[#FF7A38]">{order.id}</span>
           </p>
           <p>
-            Placed on: <span className="font-semibold">{order.createdAt.toLocaleString()}</span>
+            Placed on:{" "}
+            <span className="font-bold text-[#FF7A38]">
+              {order.createdAt.toLocaleString()}
+            </span>
           </p>
         </div>
 
         {/* Progress Bar */}
         <div className="relative mb-12">
-          <div className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2 bg-gray-200 rounded-full"></div>
+          <div className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2 bg-gray-300 rounded-full"></div>
           <div
-            className="absolute top-1/2 left-0 h-1 -translate-y-1/2 bg-yellow-400 rounded-full"
+            className="absolute top-1/2 left-0 h-1 -translate-y-1/2 bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] rounded-full transition-all duration-500"
             style={{ width: `${(order.status / (steps.length - 1)) * 100}%` }}
           ></div>
 
           <div className="flex justify-between relative z-10">
             {steps.map((step, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center w-24">
+              <div
+                key={idx}
+                className="flex flex-col items-center text-center w-24 cursor-default select-none"
+              >
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500
-                  ${idx <= order.status ? "bg-yellow-500 text-white shadow-lg scale-110" : "bg-gray-200 text-gray-400"}`}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-transform duration-500
+                    ${
+                      idx <= order.status
+                        ? "bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] text-white shadow-lg scale-110"
+                        : "bg-gray-300 text-gray-400"
+                    }`}
                 >
                   {idx + 1}
                 </div>
                 <span
-                  className={`mt-2 text-sm font-medium transition-colors duration-500
-                  ${idx <= order.status ? "text-yellow-700" : "text-gray-400"}`}
+                  className={`mt-2 text-sm font-semibold transition-colors duration-500 ${
+                    idx <= order.status ? "text-[#E94E1B]" : "text-gray-400"
+                  }`}
                 >
                   {step}
                 </span>
@@ -63,38 +72,35 @@ export default function OrderTracking() {
         </div>
 
         {/* Order Items */}
-        <h2 className="text-2xl font-bold text-yellow-900 mb-4">Order Items</h2>
+        <h2 className="text-2xl font-bold text-[#E94E1B] mb-4">Order Items</h2>
         <div className="space-y-3">
           {order.items.map((item) => (
             <div
               key={item.id}
-              className="flex justify-between items-center bg-white/50 backdrop-blur-md rounded-xl p-4 hover:shadow-lg transition shadow-md"
+              className="flex justify-between items-center bg-white rounded-xl p-4 hover:shadow-lg transition shadow-md border border-[#FF7A38]"
             >
               <div className="flex items-center gap-4">
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="w-16 h-16 rounded-lg object-cover border border-yellow-200"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-[#FF7A38]"
                 />
-                <span className="font-medium text-gray-900">
+                <span className="font-semibold text-gray-900">
                   {item.name} x {item.quantity}
                 </span>
               </div>
-              <span className="font-bold text-yellow-900">Rs {item.price * item.quantity}</span>
+              <span className="font-bold text-[#FF7A38]">
+                Rs {(item.price * item.quantity).toFixed(2)}
+              </span>
             </div>
           ))}
         </div>
 
         {/* Total */}
-        <div className="border-t border-gray-200 mt-6 pt-6 flex justify-between font-bold text-gray-900 text-xl">
+        <div className="border-t border-[#FF7A38] mt-6 pt-6 flex justify-between font-bold text-[#E94E1B] text-xl">
           <span>Total:</span>
-          <span>Rs {order.totals.amount}</span>
+          <span>Rs {order.totals.amount.toFixed(2)}</span>
         </div>
-
-        {/* Support Button */}
-        <button className="mt-8 w-full py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 rounded-full font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition transform duration-300">
-          Contact Support 📞
-        </button>
       </div>
     </div>
   );
