@@ -14,6 +14,8 @@ import OrderTracking from "./pages/OrderTracking";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import UserProfile from "./pages/UserProfile";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 
@@ -30,25 +32,98 @@ export default function App() {
       <OrderProvider>
         <div className="min-h-screen flex flex-col bg-yellow-50">
           <Navbar />
+
           <main className="flex-1">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/about" element={<About />} />
+
+              {/* Public Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/offer" element={<Offers />} />
-              <Route path="/track-order/:id" element={<OrderTracking />} />
+
+              {/* Protected Routes */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/menu"
+                element={
+                  <ProtectedRoute>
+                    <Menu />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/cart"
+                element={
+                  <ProtectedRoute>
+                    <Cart />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/about"
+                element={
+                  <ProtectedRoute>
+                    <About />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/offer"
+                element={
+                  <ProtectedRoute>
+                    <Offers />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/track-order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderTracking />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/order-confirmation/:orderId"
-                element={<OrderConfirmationWrapper />}
+                element={
+                  <ProtectedRoute>
+                    <OrderConfirmationWrapper />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/profile" element={<UserProfile />} />
-              {/* Add other routes as needed */}
             </Routes>
           </main>
+
           <Footer />
         </div>
       </OrderProvider>

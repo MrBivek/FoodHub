@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
@@ -8,12 +8,21 @@ const routeMap = {
   Offer: "/offer",
   Menu: "/menu",
   "About Us": "/about",
-  Profile: "/profile", // Added Profile here
 };
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { totals } = useCart();
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+  const isLoggedIn = !!token;
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   return (
     <header className="bg-[#FFE9E3] shadow-md sticky top-0 z-50">
@@ -38,30 +47,58 @@ export default function Navbar() {
               {item}
             </NavLink>
           ))}
+
+          {isLoggedIn && (
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#FF7A38] border-b-2 border-[#FF7A38] pb-1"
+                  : "hover:text-[#FF7A38] transition"
+              }
+            >
+              Profile
+            </NavLink>
+          )}
         </nav>
 
         {/* Right Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link
-            to="/login"
-            className="px-4 py-2 border border-[#FF7A38] text-[#FF7A38] rounded-full font-semibold hover:bg-[#FF7A38] hover:text-white transition"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="px-4 py-2 bg-[#FF7A38] text-white rounded-full font-semibold hover:bg-[#E94A1B] transition"
-          >
-            Sign Up
-          </Link>
-          <Link to="/cart" className="relative">
-            <ShoppingCart className="w-6 h-6 text-[#E94E1B]" />
-            {totals.count > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#E94E1B] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                {totals.count}
-              </span>
-            )}
-          </Link>
+
+          {isLoggedIn ? (
+            <>
+              <Link to="/cart" className="relative">
+                <ShoppingCart className="w-6 h-6 text-[#E94E1B]" />
+                {totals.count > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#E94E1B] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                    {totals.count}
+                  </span>
+                )}
+              </Link>
+
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 border border-[#FF7A38] text-[#FF7A38] rounded-full font-semibold hover:bg-[#FF7A38] hover:text-white transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-4 py-2 bg-[#FF7A38] text-white rounded-full font-semibold hover:bg-[#E94A1B] transition"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -93,21 +130,46 @@ export default function Navbar() {
             </NavLink>
           ))}
 
+          {isLoggedIn && (
+            <NavLink
+              to="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="block hover:text-[#FF7A38] transition"
+            >
+              Profile
+            </NavLink>
+          )}
+
+          {/* Auth Buttons */}
           <div className="flex space-x-4 mt-4">
-            <Link
-              to="/login"
-              className="flex-1 px-4 py-2 border border-[#FF7A38] text-center text-[#FF7A38] rounded-full font-semibold hover:bg-[#FF7A38] hover:text-white transition"
-              onClick={() => setMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="flex-1 px-4 py-2 bg-[#FF7A38] text-white text-center rounded-full font-semibold hover:bg-[#E94A1B] transition"
-              onClick={() => setMenuOpen(false)}
-            >
-              Sign Up
-            </Link>
+            {isLoggedIn ? (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setMenuOpen(false);
+                }}
+                className="flex-1 px-4 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex-1 px-4 py-2 border border-[#FF7A38] text-center text-[#FF7A38] rounded-full font-semibold hover:bg-[#FF7A38] hover:text-white transition"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex-1 px-4 py-2 bg-[#FF7A38] text-white text-center rounded-full font-semibold hover:bg-[#E94A1B] transition"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       )}
