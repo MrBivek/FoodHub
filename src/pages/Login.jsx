@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Facebook, Mail } from "lucide-react";
-import API from "../services/api"; // 👈 make sure this file exists (axios setup)
+import API from "../services/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -19,15 +19,12 @@ export default function Login() {
     setError("");
 
     try {
-      // 👇 Send login request to backend
       const { data } = await API.post("/auth/login", { email, password });
 
-      // ✅ Save JWT token to localStorage
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data));
 
-      alert("✅ Login successful!");
-      navigate("/"); // redirect after successful login
+      navigate("/");
     } catch (err) {
       console.error(err);
       setError(
@@ -40,28 +37,36 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-4 font-sans">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8">
-        {/* Title */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-extrabold text-[#E94E1B] drop-shadow-sm">
-            Welcome Back 👋
-          </h2>
-          <p className="text-sm text-[#666666] mt-1">
-            Login to continue your food journey
+    <div className="min-h-screen flex items-center justify-center px-4 font-sans bg-gradient-to-br from-[#FFD7C4] via-[#FFE9E3] to-[#FFF4EF]">
+
+      {/* Card */}
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-[#FF7A38]/40 p-8">
+
+        {/* BRAND HEADER */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-extrabold text-[#E94E1B] drop-shadow-sm">
+            Welcome to <span className="text-[#FF7A38]">FoodHub</span>
+          </h1>
+
+          <p className="text-sm mt-2 text-[#666666]">
+            Delicious food, delivered with love.  
+            <span className="text-[#E94E1B] font-semibold">  
+              Sign in to continue 🍽️
+            </span>
           </p>
         </div>
 
-        {/* Error Message */}
+        {/* Error */}
         {error && (
-          <div className="mb-5 p-3 bg-red-100 text-red-700 rounded-lg text-sm animate-shake">
+          <div className="mb-5 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
             {error}
           </div>
         )}
 
-        {/* Form */}
+        {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email */}
+
+          {/* EMAIL */}
           <div>
             <label className="block text-sm font-semibold text-[#E94E1B] mb-1">
               Email Address
@@ -72,15 +77,16 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full px-4 py-3 rounded-xl border border-[#FF7A38] focus:outline-none focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] transition bg-white"
+              className="w-full px-4 py-3 rounded-xl border border-[#FF7A38]/60 bg-white focus:outline-none focus:ring-2 focus:ring-[#FF7A38] transition"
             />
           </div>
 
-          {/* Password */}
+          {/* PASSWORD */}
           <div>
             <label className="block text-sm font-semibold text-[#E94E1B] mb-1">
               Password
             </label>
+
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -88,43 +94,44 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full px-4 py-3 rounded-xl border border-[#FF7A38] focus:outline-none focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] pr-10 transition bg-white"
+                className="w-full px-4 py-3 pr-10 rounded-xl border border-[#FF7A38]/60 bg-white focus:outline-none focus:ring-2 focus:ring-[#FF7A38]"
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-[#E94E1B] hover:text-[#FF7A38] transition"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute right-3 top-3 text-[#E94E1B]"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
           </div>
 
-          {/* Remember Me + Forgot Password */}
-          <div className="flex items-center justify-between text-sm text-[#666666]">
-            <label className="flex items-center gap-2 cursor-pointer select-none">
+          {/* Remember + Forgot */}
+          <div className="flex items-center justify-between text-sm text-[#666]">
+            <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
-                className="rounded text-[#FF7A38] focus:ring-[#E94E1B]"
+                className="rounded text-[#FF7A38]"
               />
-              Remember Me
+              Remember me
             </label>
+
             <Link
               to="/forgot-password"
               className="text-[#E94E1B] font-semibold hover:underline"
             >
-              Forgot Password?
+              Forgot password?
             </Link>
           </div>
 
-          {/* Submit Button */}
+          {/* Login Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] text-white py-3 rounded-xl font-semibold hover:shadow-lg active:scale-[0.98] transition-shadow shadow-md flex justify-center items-center gap-2"
+            className="w-full bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] text-white py-3 rounded-xl font-bold shadow-md hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 transition"
           >
             {loading ? (
               <>
@@ -132,42 +139,41 @@ export default function Login() {
                 Logging in...
               </>
             ) : (
-              "Login"
+              "Login to FoodHub"
             )}
           </button>
         </form>
 
         {/* Divider */}
-        <div className="flex items-center gap-2 my-6 text-[#666666] text-sm">
-          <hr className="flex-grow border-[#FF7A38]" />
-          <span>or continue with</span>
-          <hr className="flex-grow border-[#FF7A38]" />
+        <div className="flex items-center gap-2 my-6 text-[#666] text-sm">
+          <hr className="flex-grow border-[#FF7A38]/40" />
+          <span>or login with</span>
+          <hr className="flex-grow border-[#FF7A38]/40" />
         </div>
 
-        {/* Social Login */}
+        {/* Social Login Buttons */}
         <div className="grid grid-cols-2 gap-3">
-          <button className="flex items-center justify-center gap-2 py-2 border border-[#FF7A38] rounded-xl bg-white text-[#FF7A38] hover:bg-[#FFE6DA] transition font-semibold">
+          <button className="py-2 flex items-center justify-center gap-2 border border-[#FF7A38] text-[#FF7A38] rounded-xl hover:bg-[#FFF2EA] transition font-semibold">
             <Mail size={18} />
             Google
           </button>
-          <button className="flex items-center justify-center gap-2 py-2 border border-[#FF7A38] rounded-xl bg-white text-[#FF7A38] hover:bg-[#FFE6DA] transition font-semibold">
+
+          <button className="py-2 flex items-center justify-center gap-2 border border-[#FF7A38] text-[#FF7A38] rounded-xl hover:bg-[#FFF2EA] transition font-semibold">
             <Facebook size={18} />
             Facebook
           </button>
         </div>
 
-        {/* Sign Up Link */}
-        <div className="mt-6 text-center text-sm text-[#666666]">
-          <p>
-            Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="text-[#E94E1B] font-semibold hover:underline"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
+        {/* Signup */}
+        <p className="mt-6 text-center text-sm text-[#666]">
+          New here?{" "}
+          <Link
+            to="/register"
+            className="text-[#E94E1B] font-semibold hover:underline"
+          >
+            Create an account
+          </Link>
+        </p>
       </div>
     </div>
   );

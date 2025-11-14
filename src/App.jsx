@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -14,119 +14,45 @@ import OrderTracking from "./pages/OrderTracking";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import UserProfile from "./pages/UserProfile";
 
-import ProtectedRoute from "./components/ProtectedRoute";
-
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 
-import { useParams } from "react-router-dom";
+function App() {
+  const location = useLocation();
 
-function OrderConfirmationWrapper() {
-  const { orderId } = useParams();
-  return <OrderConfirmation orderId={orderId} estimatedTime="30 minutes" />;
-}
+  // Hide header + footer on login & register pages
+  const hideLayout = ["/login", "/register"].includes(location.pathname);
 
-export default function App() {
   return (
     <CartProvider>
       <OrderProvider>
         <div className="min-h-screen flex flex-col bg-yellow-50">
-          <Navbar />
+
+          {/* Show Navbar only if NOT login/register */}
+          {!hideLayout && <Navbar />}
 
           <main className="flex-1">
             <Routes>
-
-              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
-              {/* Protected Routes */}
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/menu"
-                element={
-                  <ProtectedRoute>
-                    <Menu />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/cart"
-                element={
-                  <ProtectedRoute>
-                    <Cart />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/checkout"
-                element={
-                  <ProtectedRoute>
-                    <Checkout />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/about"
-                element={
-                  <ProtectedRoute>
-                    <About />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/offer"
-                element={
-                  <ProtectedRoute>
-                    <Offers />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <UserProfile />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/track-order/:id"
-                element={
-                  <ProtectedRoute>
-                    <OrderTracking />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/order-confirmation/:orderId"
-                element={
-                  <ProtectedRoute>
-                    <OrderConfirmationWrapper />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/offer" element={<Offers />} />
+              <Route path="/track-order/:id" element={<OrderTracking />} />
+              <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
+              <Route path="/profile" element={<UserProfile />} />
             </Routes>
           </main>
 
-          <Footer />
+          {/* Show Footer only if NOT login/register */}
+          {!hideLayout && <Footer />}
         </div>
       </OrderProvider>
     </CartProvider>
   );
 }
+
+export default App;
