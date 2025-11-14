@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import API from "../services/api"; // ✅ axios instance
+import API from "../services/api"; // axios instance
 
 export default function Register() {
   const navigate = useNavigate();
@@ -23,12 +23,14 @@ export default function Register() {
         password,
       });
 
-      // ✅ Save token & user in localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data));
+      // Remove saving token & user here to prevent auto-login
+      // localStorage.setItem("token", data.token);
+      // localStorage.setItem("user", JSON.stringify(data));
 
       alert(`🎉 Welcome ${data.name || fullName}! Registration successful.`);
-      navigate("/"); // Redirect after signup
+
+      // Redirect to login page after registration
+      navigate("/login");
     } catch (err) {
       console.error(err);
       setError(

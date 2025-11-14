@@ -16,28 +16,27 @@ import UserProfile from "./pages/UserProfile";
 
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
-import ProtectedRoute from "./components/ProtectedRoute";  // <<< IMPORT
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const location = useLocation();
 
+  // Hide navbar and footer on login/register pages
   const hideLayout = ["/login", "/register"].includes(location.pathname);
 
   return (
     <CartProvider>
       <OrderProvider>
         <div className="min-h-screen flex flex-col bg-yellow-50">
-
           {!hideLayout && <Navbar />}
 
           <main className="flex-1">
             <Routes>
-
-              {/* PUBLIC ROUTES */}
+              {/* Public routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
-              {/* PROTECTED ROUTES */}
+              {/* Protected routes */}
               <Route
                 path="/"
                 element={
@@ -46,7 +45,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/menu"
                 element={
@@ -55,7 +53,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/cart"
                 element={
@@ -64,7 +61,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/checkout"
                 element={
@@ -73,7 +69,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/about"
                 element={
@@ -82,7 +77,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/profile"
                 element={
@@ -91,7 +85,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/offer"
                 element={
@@ -100,7 +93,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/track-order/:id"
                 element={
@@ -109,7 +101,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/order-confirmation/:orderId"
                 element={
@@ -118,7 +109,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
             </Routes>
           </main>
 
