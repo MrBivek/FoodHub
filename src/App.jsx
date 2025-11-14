@@ -16,11 +16,11 @@ import UserProfile from "./pages/UserProfile";
 
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
+import ProtectedRoute from "./components/ProtectedRoute";  // <<< IMPORT
 
 function App() {
   const location = useLocation();
 
-  // Hide header + footer on login & register pages
   const hideLayout = ["/login", "/register"].includes(location.pathname);
 
   return (
@@ -28,26 +28,100 @@ function App() {
       <OrderProvider>
         <div className="min-h-screen flex flex-col bg-yellow-50">
 
-          {/* Show Navbar only if NOT login/register */}
           {!hideLayout && <Navbar />}
 
           <main className="flex-1">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/about" element={<About />} />
+
+              {/* PUBLIC ROUTES */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/offer" element={<Offers />} />
-              <Route path="/track-order/:id" element={<OrderTracking />} />
-              <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
-              <Route path="/profile" element={<UserProfile />} />
+
+              {/* PROTECTED ROUTES */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/menu"
+                element={
+                  <ProtectedRoute>
+                    <Menu />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/cart"
+                element={
+                  <ProtectedRoute>
+                    <Cart />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/about"
+                element={
+                  <ProtectedRoute>
+                    <About />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/offer"
+                element={
+                  <ProtectedRoute>
+                    <Offers />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/track-order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderTracking />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/order-confirmation/:orderId"
+                element={
+                  <ProtectedRoute>
+                    <OrderConfirmation />
+                  </ProtectedRoute>
+                }
+              />
+
             </Routes>
           </main>
 
-          {/* Show Footer only if NOT login/register */}
           {!hideLayout && <Footer />}
         </div>
       </OrderProvider>
