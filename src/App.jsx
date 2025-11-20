@@ -18,10 +18,16 @@ import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// ADMIN PAGES
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import FoodList from "./pages/admin/FoodList";
+import AddFood from "./pages/admin/AddFood";
+import EditFood from "./pages/admin/EditFood";
+
 function App() {
   const location = useLocation();
 
-  // Hide navbar and footer on login/register pages
+  // Hide navbar/footer on login/register
   const hideLayout = ["/login", "/register"].includes(location.pathname);
 
   return (
@@ -32,11 +38,11 @@ function App() {
 
           <main className="flex-1">
             <Routes>
-              {/* Public routes */}
+              {/* AUTH */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
-              {/* Protected routes */}
+              {/* PUBLIC PAGES — PROTECTED */}
               <Route
                 path="/"
                 element={
@@ -45,6 +51,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/menu"
                 element={
@@ -53,6 +60,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/cart"
                 element={
@@ -61,6 +69,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/checkout"
                 element={
@@ -69,6 +78,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/about"
                 element={
@@ -77,6 +87,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/profile"
                 element={
@@ -85,6 +96,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/offer"
                 element={
@@ -93,6 +105,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/track-order/:id"
                 element={
@@ -101,11 +114,52 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/order-confirmation/:orderId"
                 element={
                   <ProtectedRoute>
                     <OrderConfirmation />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* -------------------------------------- */}
+              {/* ADMIN ROUTES (ADMIN ONLY) */}
+              {/* -------------------------------------- */}
+
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/admin/foods"
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <FoodList />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/admin/add-food"
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <AddFood />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/admin/edit-food/:id"
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <EditFood />
                   </ProtectedRoute>
                 }
               />
