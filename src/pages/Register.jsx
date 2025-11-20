@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import API from "../services/api"; // axios instance
+import API from "../utils/API";
 
 export default function Register() {
   const navigate = useNavigate();
-
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,86 +22,66 @@ export default function Register() {
         password,
       });
 
-      // Remove saving token & user here to prevent auto-login
-      // localStorage.setItem("token", data.token);
-      // localStorage.setItem("user", JSON.stringify(data));
-
-      alert(`🎉 Welcome ${data.name || fullName}! Registration successful.`);
-
-      // Redirect to login page after registration
+      alert(`Welcome ${data.name}!`);
       navigate("/login");
     } catch (err) {
-      console.error(err);
-      setError(
-        err.response?.data?.message ||
-          "Registration failed. Please check your details."
-      );
+      setError(err.response?.data?.message || "Registration failed.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3] px-6 py-12 font-sans">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-lg border border-[#FF7A38] p-8">
-        <h2 className="text-3xl font-extrabold text-[#E94E1B] mb-2 text-center">
-          Create Account
+    <div className="min-h-screen flex items-center justify-center bg-[#FFE9E3]">
+      <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-lg">
+        <h2 className="text-3xl text-center font-bold text-[#E94E1B] mb-4">
+          Register
         </h2>
-        <p className="text-center text-[#666666] mb-8 text-sm">
-          Join us and start your food journey today 🍴
-        </p>
 
         {error && (
-          <div className="mb-5 p-3 bg-red-100 text-red-700 rounded-lg text-sm animate-shake">
-            {error}
-          </div>
+          <p className="bg-red-100 p-3 rounded-md text-red-700 mb-4">{error}</p>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="text"
             placeholder="Full Name"
+            className="w-full border px-4 py-3 rounded-xl"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] outline-none bg-white transition"
             required
           />
+
           <input
             type="email"
             placeholder="Email Address"
+            className="w-full border px-4 py-3 rounded-xl"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] outline-none bg-white transition"
             required
           />
+
           <input
             type="password"
             placeholder="Password"
+            className="w-full border px-4 py-3 rounded-xl"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 border rounded-xl border-[#FF7A38] focus:ring-2 focus:ring-[#FF7A38] focus:border-[#E94E1B] outline-none bg-white transition"
             required
           />
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] shadow-md hover:shadow-lg hover:scale-[1.05] active:scale-[0.98] transition flex justify-center items-center ${
-              loading ? "opacity-70 cursor-not-allowed" : ""
-            }`}
+            className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl font-bold"
           >
             {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-[#666666]">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-[#FF7A38] font-semibold hover:underline"
-          >
-            Login
-          </Link>
+        <p className="text-center mt-4">
+          Already have an account?
+          <Link to="/login" className="text-[#FF7A38]"> Login</Link>
         </p>
       </div>
     </div>

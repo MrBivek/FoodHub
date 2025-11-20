@@ -1,145 +1,124 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { Star, Search, X } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import API from "../utils/API";
 
-import momoImg from "../assets/momo.jpeg";
-import chowmeinImg from "../assets/veg chowmine.jpg";
-import sekuwaImg from "../assets/sekwa.jpg";
-import jimbuImg from "../assets/jimbu.jpg";
-import burgerImg from "../assets/burger.jpg";
-import friesImg from "../assets/fries.jpg";
-import pizzaImg from "../assets/pizza.jpg";
-import wingsImg from "../assets/wings.jpg";
-import cornDogImg from "../assets/corn dog.jpg";
-import grillChickenImg from "../assets/Grill Chicken.jpg";
-import sandwichImg from "../assets/Sandwitch.jpg";
-import pastaImg from "../assets/pasta.png";
+/* local images imports... (keep yours) */
+
+const localImageMap = { /* keep your mapping */ };
 
 export default function Menu() {
   const { addItem } = useCart();
   const [query, setQuery] = useState("");
+  const [dishes, setDishes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
 
-  const dishes = [
-    { id: 1, name: "Momo", img: momoImg, price: 299, rating: 4.8, badge: "Best Seller", color: "from-red-400 to-red-600" },
-    { id: 2, name: "Chicken Sekuwa", img: sekuwaImg, price: 399, rating: 4.9, badge: "Hot", color: "from-orange-400 to-orange-600" },
-    { id: 3, name: "Thakali Set", img: jimbuImg, price: 349, rating: 4.6, color: "from-yellow-400 to-yellow-600" },
-    { id: 4, name: "Veg Chowmein", img: chowmeinImg, price: 249, rating: 4.7, color: "from-green-400 to-green-600" },
-    { id: 5, name: "Classic Burger", img: burgerImg, price: 349, rating: 4.5, badge: "New", color: "from-amber-400 to-amber-600" },
-    { id: 6, name: "Chicken Pizza", img: pizzaImg, price: 499, rating: 4.6, color: "from-red-400 to-pink-600" },
-    { id: 7, name: "French Fries", img: friesImg, price: 149, rating: 4.4, color: "from-yellow-500 to-orange-500" },
-    { id: 8, name: "Buffalo Wings", img: wingsImg, price: 399, rating: 4.7, color: "from-red-500 to-orange-500" },
-    { id: 9, name: "Corn Dog", img: cornDogImg, price: 199, rating: 4.3, color: "from-yellow-400 to-red-500" },
-    { id: 10, name: "Grill Chicken", img: grillChickenImg, price: 459, rating: 4.8, badge: "Chef's Special", color: "from-orange-500 to-red-500" },
-    { id: 11, name: "Club Sandwich", img: sandwichImg, price: 279, rating: 4.5, color: "from-green-400 to-teal-500" },
-    { id: 12, name: "Creamy Pasta", img: pastaImg, price: 329, rating: 4.6, color: "from-yellow-300 to-orange-400" },
-  ];
+  useEffect(() => {
+    async function loadMenu() {
+      try {
+        setLoading(true);
+
+        const res = await API.get("/foods");
+        const data = res.data.map(item => ({
+          id: item._id,
+          name: item.name,
+          price: item.price,
+          rating: item.rating ?? 4.5,
+          badge: item.badge ?? null,
+          img: item.image ?? null,
+        }));
+
+        setDishes(data);
+      } catch (e) {
+        console.error(e);
+        setErr("Failed to load menu. Using defaults.");
+
+        const fallback = Object.keys(localImageMap).map((name, i) => ({
+          id: i + 1,
+          name,
+          price: 150 + i * 40,
+          rating: 4.5,
+          img: null,
+        }));
+
+        setDishes(fallback);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadMenu();
+  }, []);
 
   const filtered = dishes.filter((d) =>
     d.name.toLowerCase().includes(query.toLowerCase())
   );
 
-  const clearSearch = () => setQuery("");
+  const getImgUrl = (dish) => {
+    if (dish.img?.startsWith("http")) return dish.img;
+    if (dish.img) return `/uploads/${dish.img}`;
+    return localImageMap[dish.name];
+  };
 
   return (
-    <section className="bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 min-h-screen">
+    <section className="min-h-screen bg-[#FFF7F3]">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Our <span className="text-red-500">Regular</span> Menu
-          </h1>
-          <p className="text-gray-700 text-lg mb-8">
-            These Are Our Regular Menus. You Can Order Anything You Like
-          </p>
+        <h1 className="text-center text-4xl font-bold mb-4">Menu</h1>
 
-          {/* Search Bar */}
-          <div className="max-w-xl mx-auto relative">
-            <label htmlFor="search" className="sr-only">Search Dishes</label>
-            <Search
-              className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"
-              size={20}
-              aria-hidden="true"
+        {/* Search Bar */}
+        <div className="max-w-xl mx-auto relative mb-10">
+          <Search className="absolute left-5 top-3 text-gray-400" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search dishes..."
+            className="w-full border rounded-full py-3 pl-14 pr-10"
+          />
+          {query && (
+            <X
+              onClick={() => setQuery("")}
+              className="absolute right-4 top-3 cursor-pointer"
             />
-            <input
-              id="search"
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search for momo, pizza, burger..."
-              className="w-full pl-14 pr-10 py-4 rounded-full border-2 border-orange-200 shadow-md focus:ring-4 focus:ring-orange-300 focus:border-orange-400 outline-none transition-all text-gray-800 bg-white"
-              aria-label="Search menu items"
-            />
-            {query && (
-              <button
-                onClick={clearSearch}
-                aria-label="Clear search"
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-500 transition"
-              >
-                <X size={20} />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Menu Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {filtered.length > 0 ? (
-            filtered.map((dish) => (
-              <div
-                key={dish.id}
-                className="group relative bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2"
-                tabIndex={0}
-                aria-label={`${dish.name}, price Rs ${dish.price}`}
-              >
-                {/* Badge */}
-                {dish.badge && (
-                  <div className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-bl-2xl rounded-tr-2xl shadow-lg z-10 select-none">
-                    {dish.badge}
-                  </div>
-                )}
-
-                {/* Image Circle */}
-                <div className="pt-6 pb-2 flex justify-center">
-                  <div
-                    className={`w-28 h-28 rounded-full ring-4 ring-orange-100 group-hover:ring-orange-300 transition shadow-lg overflow-hidden flex items-center justify-center transform group-hover:scale-110 duration-300`}
-                  >
-                    <img
-                      src={dish.img}
-                      alt={dish.name}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-
-                {/* Dish Info */}
-                <div className="px-4 pb-4 text-center">
-                  <h3 className="font-bold text-gray-900 mb-1 text-lg">{dish.name}</h3>
-
-                  {/* Rating */}
-                  <div className="flex justify-center items-center mb-2">
-                    <Star className="w-4 h-4 text-yellow-400 mr-1" />
-                    <span className="text-sm text-gray-600">{dish.rating.toFixed(1)}</span>
-                  </div>
-
-                  <p className="text-orange-600 font-semibold text-xl mb-4">Rs. {dish.price}</p>
-
-                  <button
-                    onClick={() => addItem(dish)}
-                    className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-full text-sm font-semibold hover:shadow-lg transition w-full"
-                    aria-label={`Add ${dish.name} to cart`}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="col-span-full text-center text-gray-500 text-lg">
-              No dishes match your search.
-            </p>
           )}
         </div>
+
+        {loading && <p className="text-center">Loading...</p>}
+        {err && <p className="text-center text-red-500">{err}</p>}
+
+        {/* Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {filtered.map((dish) => (
+            <div key={dish.id} className="bg-white rounded-xl p-4 shadow">
+              <img src={getImgUrl(dish)} className="w-full h-32 object-cover rounded-xl" />
+              <h3 className="font-bold mt-3">{dish.name}</h3>
+
+              <div className="flex items-center text-yellow-500 text-sm">
+                <Star size={16} />
+                <span className="ml-1">{dish.rating}</span>
+              </div>
+
+              <p className="text-orange-600 font-bold text-lg">Rs {dish.price}</p>
+
+              <button
+                className="w-full mt-3 py-2 bg-orange-500 text-white rounded-full"
+                onClick={() =>
+                  addItem({
+                    id: dish.id,
+                    name: dish.name,
+                    price: dish.price,
+                    img: getImgUrl(dish),
+                  })
+                }
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
