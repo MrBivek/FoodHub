@@ -23,6 +23,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import FoodList from "./pages/admin/FoodList";
 import AddFood from "./pages/admin/AddFood";
 import EditFood from "./pages/admin/EditFood";
+import OrderList from "./pages/admin/OrderList"; // ✅ Added
 
 function App() {
   const location = useLocation();
@@ -160,6 +161,16 @@ function App() {
                 element={
                   <ProtectedRoute adminOnly={true}>
                     <EditFood />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* ✅ ADDED ADMIN ORDER ROUTE */}
+              <Route
+                path="/admin/orders"
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <OrderList />
                   </ProtectedRoute>
                 }
               />

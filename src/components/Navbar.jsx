@@ -1,6 +1,7 @@
-import { useState } from "react";
+// components/Navbar.jsx
+import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart, Shield } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 const routeMap = {
@@ -12,15 +13,33 @@ const routeMap = {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const { totals } = useCart();
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
 
+  // Load user data from localStorage
+  useEffect(() => {
+    if (isLoggedIn) {
+      try {
+        const userData = JSON.parse(localStorage.getItem("user"));
+        setUser(userData);
+        console.log("Navbar user:", userData); // Debug log
+      } catch (err) {
+        console.error("Failed to parse user data:", err);
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  }, [isLoggedIn]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    setUser(null);
     navigate("/login");
   };
 
@@ -49,22 +68,40 @@ export default function Navbar() {
           ))}
 
           {isLoggedIn && (
-            <NavLink
-              to="/profile"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#FF7A38] border-b-2 border-[#FF7A38] pb-1"
-                  : "hover:text-[#FF7A38] transition"
-              }
-            >
-              Profile
-            </NavLink>
+            <>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#FF7A38] border-b-2 border-[#FF7A38] pb-1"
+                    : "hover:text-[#FF7A38] transition"
+                }
+              >
+                Profile
+              </NavLink>
+
+              {/* Show Admin link if user is admin */}
+              {user?.isAdmin && (
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `flex items-center gap-1 ${
+                      isActive
+                        ? "text-[#FF7A38] border-b-2 border-[#FF7A38] pb-1"
+                        : "hover:text-[#FF7A38] transition"
+                    }`
+                  }
+                >
+                  <Shield size={16} />
+                  Admin
+                </NavLink>
+              )}
+            </>
           )}
         </nav>
 
         {/* Right Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-
           {isLoggedIn ? (
             <>
               <Link to="/cart" className="relative">
@@ -75,6 +112,17 @@ export default function Navbar() {
                   </span>
                 )}
               </Link>
+
+              {user && (
+                <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-[#FF7A38]">
+                  <span className="text-sm font-semibold text-[#E94E1B]">
+                    {user.name}
+                  </span>
+                  {user.isAdmin && (
+                    <Shield size={14} className="text-[#FF7A38]" />
+                  )}
+                </div>
+              )}
 
               <button
                 onClick={handleLogout}
@@ -131,13 +179,35 @@ export default function Navbar() {
           ))}
 
           {isLoggedIn && (
-            <NavLink
-              to="/profile"
-              onClick={() => setMenuOpen(false)}
-              className="block hover:text-[#FF7A38] transition"
-            >
-              Profile
-            </NavLink>
+            <>
+              <NavLink
+                to="/profile"
+                onClick={() => setMenuOpen(false)}
+                className="block hover:text-[#FF7A38] transition"
+              >
+                Profile
+              </NavLink>
+
+              {user?.isAdmin && (
+                <NavLink
+                  to="/admin"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-1 hover:text-[#FF7A38] transition"
+                >
+                  <Shield size={16} />
+                  Admin Panel
+                </NavLink>
+              )}
+
+              <NavLink
+                to="/cart"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 hover:text-[#FF7A38] transition"
+              >
+                <ShoppingCart size={16} />
+                Cart ({totals.count})
+              </NavLink>
+            </>
           )}
 
           {/* Auth Buttons */}
