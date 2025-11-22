@@ -3,20 +3,34 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 export default function ProtectedRoute({ children, adminOnly = false }) {
-  const token = localStorage.getItem("token");
   const location = useLocation();
 
+  // Get token
+  const token = localStorage.getItem("token");
+
+  // If token missing → force login
   if (!token) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
-  let user = null;
-  try {
-    user = JSON.parse(localStorage.getItem("user"));
-  } catch {}
+  // Parse user safely
+  const user = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("user"));
+    } catch {
+      return null;
+    }
+  })();
 
-  if (adminOnly && !(user && user.isAdmin)) {
-    // Not authorized for admin routes — send to home (or show 403 page)
+  // If expected user data is missing → remove corrupted localStorage and logout
+  if (!user) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    return <Navigate to="/login" replace />;
+  }
+
+  // ADMIN ROUTE PROTECTION
+  if (adminOnly && !user.isAdmin) {
     return <Navigate to="/" replace />;
   }
 

@@ -1,4 +1,3 @@
-// pages/Checkout.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../utils/API";
@@ -18,19 +17,17 @@ export default function Checkout() {
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    
+
     if (!items || items.length === 0) {
       setErr("Cart is empty");
       return;
     }
 
-    // Validate address
     if (!address.street || !address.city || !address.postalCode) {
-      setErr("Please fill in all address fields");
+      setErr("Please fill in all required address fields");
       return;
     }
 
-    // Check if user is authenticated
     const token = localStorage.getItem("token");
     if (!token) {
       setErr("Please login to place an order");
@@ -38,45 +35,41 @@ export default function Checkout() {
       return;
     }
 
-    // Build backend-friendly payload
     const payload = {
-      items: items.map((item) => ({
-        id: item.id,
-        name: item.name,
-        quantity: item.quantity || 1,
-        price: item.price,
+      items: items.map(({ id, name, quantity = 1, price, img, image }) => ({
+        id,
+        name,
+        quantity,
+        price,
+        image: img || image || "",
       })),
       totalAmount: totals.amount,
       deliveryAddress: address,
     };
 
-    console.log("Placing order:", payload); // Debug log
-
     try {
       setLoading(true);
       setErr("");
-      
+
       const res = await API.post("/orders", payload);
-      const order = res.data;
-      
-      console.log("Order placed:", order); // Debug log
-      
-      // Clear cart and navigate to confirmation
+      const order = res.data.data || res.data;
+      const orderId = order._id || order.id;
+
+      if (!orderId) {
+        throw new Error("No order ID received");
+      }
+
       clear();
-      
-      // Use setTimeout to ensure cart is cleared before navigation
-      setTimeout(() => {
-        navigate(`/order-confirmation/${order._id || order.id}`);
-      }, 100);
-      
+      navigate(`/order-confirmation/${orderId}`);
     } catch (error) {
-      console.error("Place order error:", error);
-      
-      // Don't clear token on order placement errors
-      const errorMsg = error?.response?.data?.message || "Failed to place order. Please try again.";
+      console.error("Order placement error:", error);
+
+      const errorMsg =
+        error?.response?.data?.message ||
+        error.message ||
+        "Failed to place order. Please try again.";
       setErr(errorMsg);
-      
-      // If it's an auth error, redirect to login
+
       if (error?.response?.status === 401) {
         setTimeout(() => {
           navigate("/login", { state: { from: "/checkout" } });
@@ -89,9 +82,12 @@ export default function Checkout() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-[#FFE9E3] py-12 px-6 font-sans flex items-center justify-center">
-        <div className="bg-white rounded-3xl shadow-xl border border-[#FF7A38] p-12 text-center max-w-md">
-          <h1 className="text-3xl font-extrabold text-[#E94E1B] mb-4">
+      <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 py-12 px-6 font-sans flex items-center justify-center">
+        <section
+          aria-label="Empty cart message"
+          className="bg-white rounded-3xl shadow-xl border border-red-500 p-12 text-center max-w-md"
+        >
+          <h1 className="text-3xl font-extrabold text-red-500 mb-4">
             Your Cart is Empty
           </h1>
           <p className="text-gray-700 mb-8">
@@ -99,95 +95,127 @@ export default function Checkout() {
           </p>
           <Link
             to="/menu"
-            className="inline-block bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition"
+            className="inline-block bg-gradient-to-r from-red-500 to-orange-500 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition"
           >
             Browse Menu
           </Link>
-        </div>
-      </div>
+        </section>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFF1EB] via-[#FFE9E3] to-[#FFD6C2] py-12 px-6 font-sans">
+    <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 py-12 px-6 font-sans">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-5xl font-extrabold text-[#E94E1B] mb-8 text-center">
+        <h1 className="text-5xl font-extrabold text-red-500 mb-8 text-center">
           Checkout
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Delivery Address Form */}
-          <div className="bg-white rounded-3xl shadow-xl border border-[#FF7A38] p-8">
-            <h2 className="text-2xl font-bold text-[#E94E1B] mb-6">
+          <section
+            aria-labelledby="delivery-address-heading"
+            className="bg-white rounded-3xl shadow-xl border border-red-500 p-8"
+          >
+            <h2
+              id="delivery-address-heading"
+              className="text-2xl font-bold text-red-500 mb-6"
+            >
               Delivery Address
             </h2>
 
             {err && (
-              <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center">
+              <div
+                role="alert"
+                className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center"
+              >
                 {err}
               </div>
             )}
 
-            <form onSubmit={handlePlaceOrder} className="space-y-4">
+            <form onSubmit={handlePlaceOrder} className="space-y-4" noValidate>
               <div>
-                <label className="block text-[#E94E1B] font-semibold mb-2">
+                <label
+                  htmlFor="street"
+                  className="block text-red-500 font-semibold mb-2"
+                >
                   Street Address *
                 </label>
                 <input
+                  id="street"
+                  name="street"
                   type="text"
                   value={address.street}
                   onChange={(e) =>
                     setAddress({ ...address, street: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FF7A38]"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="123 Main Street"
                   required
+                  aria-required="true"
                 />
               </div>
 
               <div>
-                <label className="block text-[#E94E1B] font-semibold mb-2">
+                <label
+                  htmlFor="city"
+                  className="block text-red-500 font-semibold mb-2"
+                >
                   City *
                 </label>
                 <input
+                  id="city"
+                  name="city"
                   type="text"
                   value={address.city}
                   onChange={(e) =>
                     setAddress({ ...address, city: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FF7A38]"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="Kathmandu"
                   required
+                  aria-required="true"
                 />
               </div>
 
               <div>
-                <label className="block text-[#E94E1B] font-semibold mb-2">
+                <label
+                  htmlFor="postalCode"
+                  className="block text-red-500 font-semibold mb-2"
+                >
                   Postal Code *
                 </label>
                 <input
+                  id="postalCode"
+                  name="postalCode"
                   type="text"
                   value={address.postalCode}
                   onChange={(e) =>
                     setAddress({ ...address, postalCode: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FF7A38]"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="44600"
                   required
+                  aria-required="true"
                 />
               </div>
 
               <div>
-                <label className="block text-[#E94E1B] font-semibold mb-2">
+                <label
+                  htmlFor="country"
+                  className="block text-red-500 font-semibold mb-2"
+                >
                   Country
                 </label>
                 <input
+                  id="country"
+                  name="country"
                   type="text"
                   value={address.country}
                   onChange={(e) =>
                     setAddress({ ...address, country: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FF7A38]"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="Nepal"
                 />
               </div>
@@ -198,56 +226,62 @@ export default function Checkout() {
                 className={`w-full text-white font-bold py-4 rounded-full transition shadow-lg mt-6 ${
                   loading
                     ? "bg-gray-300 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#FF7A38] to-[#E94E1B] hover:shadow-2xl hover:scale-105"
+                    : "bg-gradient-to-r from-red-500 to-orange-500 hover:shadow-2xl hover:scale-105"
                 }`}
+                aria-busy={loading}
               >
                 {loading ? "Placing Order..." : "Place Order"}
               </button>
             </form>
-          </div>
+          </section>
 
           {/* Order Summary */}
-          <div className="bg-white rounded-3xl shadow-xl border border-[#FF7A38] p-8 h-max sticky top-20">
-            <h2 className="text-2xl font-bold text-[#E94E1B] mb-6">
+          <aside
+            aria-labelledby="order-summary-heading"
+            className="bg-white rounded-3xl shadow-xl border border-red-500 p-8 h-max sticky top-20"
+          >
+            <h2
+              id="order-summary-heading"
+              className="text-2xl font-bold text-red-500 mb-6"
+            >
               Order Summary
             </h2>
-            
+
             <div className="space-y-4 mb-6">
-              {items.map((item) => (
+              {items.map(({ id, img, image, name, quantity = 1, price }) => (
                 <div
-                  key={item.id}
+                  key={id}
                   className="flex justify-between items-center pb-4 border-b border-gray-200"
                 >
                   <div className="flex items-center gap-3">
                     <img
-                      src={item.img}
-                      alt={item.name}
-                      className="w-16 h-16 rounded-full object-cover border-2 border-[#FF7A38]"
+                      src={img || image || "https://via.placeholder.com/100x100.png?text=Food"}
+                      alt={name}
+                      className="w-16 h-16 rounded-full object-cover border-2 border-red-500"
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/100x100.png?text=Food";
+                        e.target.src =
+                          "https://via.placeholder.com/100x100.png?text=Food";
                       }}
                     />
                     <div>
-                      <p className="font-semibold text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-600">
-                        Qty: {item.quantity || 1}
-                      </p>
+                      <p className="font-semibold text-gray-900">{name}</p>
+                      <p className="text-sm text-gray-600">Qty: {quantity}</p>
                     </div>
                   </div>
-                  <p className="font-bold text-[#FF7A38]">
-                    Rs {(item.price * (item.quantity || 1)).toFixed(2)}
+                  <p className="font-bold text-orange-500">
+                    Rs {(price * quantity).toFixed(2)}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-3 pt-4 border-t-2 border-[#FF7A38]">
+            <div className="space-y-3 pt-4 border-t-2 border-red-500">
               <div className="flex justify-between text-lg font-semibold text-gray-700">
                 <span>Total Items:</span>
                 <span>{totals.count}</span>
               </div>
 
-              <div className="flex justify-between text-2xl font-bold text-[#FF7A38]">
+              <div className="flex justify-between text-2xl font-bold text-red-500">
                 <span>Total Price:</span>
                 <span>Rs {totals.amount.toFixed(2)}</span>
               </div>
@@ -258,9 +292,9 @@ export default function Checkout() {
                 🚚 Estimated delivery: <strong>30 minutes</strong>
               </p>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

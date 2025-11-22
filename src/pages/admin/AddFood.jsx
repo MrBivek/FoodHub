@@ -22,6 +22,8 @@ export default function AddFood() {
   };
 
   const onImageChange = (e) => {
+    if (preview) URL.revokeObjectURL(preview);
+
     const file = e.target.files[0];
     setImage(file);
     if (file) setPreview(URL.createObjectURL(file));
@@ -29,19 +31,30 @@ export default function AddFood() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setMsg("");
+
+    // Validate rating
+    if (form.rating < 0 || form.rating > 5) {
+      setMsg("Rating must be between 0 and 5.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const formData = new FormData();
 
-      Object.keys(form).forEach((key) => {
-        formData.append(key, form[key]);
+      Object.entries(form).forEach(([key, value]) => {
+        if (key === "price" || key === "rating") {
+          formData.append(key, Number(value));
+        } else {
+          formData.append(key, value);
+        }
       });
 
       if (image) formData.append("image", image);
 
-      const res = await API.post("/foods", formData, {
+      await API.post("/foods", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -56,6 +69,7 @@ export default function AddFood() {
         isAvailable: true,
       });
       setImage(null);
+      if (preview) URL.revokeObjectURL(preview);
       setPreview(null);
     } catch (err) {
       console.error(err);
@@ -82,6 +96,7 @@ export default function AddFood() {
               value={form.name}
               onChange={onChange}
               required
+              disabled={loading}
               className="w-full border p-2 rounded"
             />
           </div>
@@ -94,6 +109,7 @@ export default function AddFood() {
               value={form.description}
               onChange={onChange}
               required
+              disabled={loading}
               className="w-full border p-2 rounded h-24"
             />
           </div>
@@ -107,6 +123,7 @@ export default function AddFood() {
               value={form.price}
               onChange={onChange}
               required
+              disabled={loading}
               className="w-full border p-2 rounded"
             />
           </div>
@@ -118,6 +135,7 @@ export default function AddFood() {
               name="category"
               value={form.category}
               onChange={onChange}
+              disabled={loading}
               className="w-full border p-2 rounded"
             >
               <option>Breakfast</option>
@@ -140,6 +158,7 @@ export default function AddFood() {
               max="5"
               step="0.1"
               onChange={onChange}
+              disabled={loading}
               className="w-full border p-2 rounded"
             />
           </div>
@@ -152,6 +171,7 @@ export default function AddFood() {
               name="badge"
               value={form.badge}
               onChange={onChange}
+              disabled={loading}
               className="w-full border p-2 rounded"
               placeholder="Hot, New, Popular..."
             />
@@ -160,7 +180,12 @@ export default function AddFood() {
           {/* Image Upload */}
           <div>
             <label className="block mb-1">Food Image</label>
-            <input type="file" accept="image/*" onChange={onImageChange} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={onImageChange}
+              disabled={loading}
+            />
             {preview && (
               <img
                 src={preview}
@@ -174,7 +199,7 @@ export default function AddFood() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 text-white py-2 rounded"
+            className="w-full bg-orange-500 text-white py-2 rounded disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? "Adding..." : "Add Food"}
           </button>
